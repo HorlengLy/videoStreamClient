@@ -11,7 +11,7 @@
         console.log('connection');
     })
     socket.on('getRoom',(rooms)=>{
-        console.log({rooms});
+        // console.log({rooms});
         store().setRooms(rooms)
     })
     socket.on('response',({ms,room,success})=>{

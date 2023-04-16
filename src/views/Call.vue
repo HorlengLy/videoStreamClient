@@ -10,7 +10,7 @@
     socket.on('userJoinedRoom',({username,peerId})=>{
         peer.connect(peerId)
         const call = peer.call(peerId,window.localStream)
-        console.log({ownStream:window.localStream});
+        // console.log({ownStream:window.localStream});
         call.on("stream",friendStream=>{
             addStream(username,peerId,friendStream)
         })
@@ -36,7 +36,7 @@
     peer.on('call',(call)=>{
         call.answer(window.localStream)
         call.on('stream',stream=>{
-            console.log({friendStream:stream});
+            // console.log({friendStream:stream});
             addStream(getUser(window.friendId)?.username,window.friendId,stream)
         })
     })

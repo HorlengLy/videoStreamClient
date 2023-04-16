@@ -56,7 +56,7 @@
       <button
         v-if="store().loading"
         disabled
-        class="py-2 w-[100px] rounded-md shadow shadow-gray-400 hover:shadow-sky-500 mt-5 hover:bg-sky-400 hover:text-gray-200 text-sm transition-all duration-200"
+        class="py-2 w-[100px] rounded-md cursor-wait shadow shadow-gray-400 hover:shadow-sky-500 mt-5 hover:text-gray-200 text-sm transition-all duration-200"
       >
         Loading...
       </button>
@@ -108,9 +108,9 @@
       <button
         v-else
         disabled
-        class="py-2 w-[100px] rounded-md shadow shadow-gray-400 hover:shadow-sky-500 mt-5 hover:bg-sky-400 hover:text-gray-200 text-sm transition-all duration-200"
+        class="py-2 w-[100px] rounded-md shadow shadow-gray-400 cursor-wait hover:shadow-sky-500 mt-5  hover:text-gray-200 text-sm transition-all duration-200"
       >
-        loading...
+        Loading...
       </button>
     </div>
   </div>
