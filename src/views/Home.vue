@@ -45,7 +45,7 @@
 <template>
     <div class="lg:w-[80%] mx-auto bg-white py-[100px] h-full">
         <div class="relative overflow-hidden w-fit mx-auto">
-            <span id="text-animate" class="md:text-3xl sm:text-xl text-lg font-lora font-bold"></span>
+            <span id="text-animate" class="md:text-3xl sm:text-xl text-lg font-lora font-bold text-gray-600"></span>
         </div>
         <div class="flex md:flex-row flex-col gap-10 md:gap-5 mt-[50px]">
             <div class="flex-1 flex items-center justify-center rounded relative">

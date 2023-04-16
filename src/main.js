@@ -8,7 +8,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { createPinia } from 'pinia'
-export const socket = io("ws://localhost:5000/");
+export const socket = io("https://call-video.onrender.com");
 export const peer = new Peer()
 
 const pinia = createPinia()
