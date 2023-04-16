@@ -1,5 +1,6 @@
 <script>
   import { ref } from 'vue';
+  import { store } from '../Store';
   import { generatorRoom,copyText } from '../data';
     export default{
         data:()=>{
@@ -7,7 +8,7 @@
           const code = ref('')
           const room = ref(generatorRoom())
           const isJoinRoom = ref(false)
-          return {code,room,username,isJoinRoom,copyText}
+          return {code,room,username,isJoinRoom,copyText,store}
         },
         props:['joinRoom']
 
@@ -53,6 +54,14 @@
     </div>
     <div class="flex justify-end">
       <button
+        v-if="store().loading"
+        disabled
+        class="py-2 w-[100px] rounded-md shadow shadow-gray-400 hover:shadow-sky-500 mt-5 hover:bg-sky-400 hover:text-gray-200 text-sm transition-all duration-200"
+      >
+        Loading...
+      </button>
+      <button
+        v-else
         @click="joinRoom(username, code,true)"
         class="py-2 w-[100px] rounded-md shadow shadow-gray-400 hover:shadow-sky-500 mt-5 hover:bg-sky-400 hover:text-gray-200 text-sm transition-all duration-200"
       >
@@ -90,10 +99,18 @@
     </div>
     <div class="flex justify-end">
       <button
+        v-if="!store().loading"
         @click="joinRoom(username, room,false)"
         class="py-2 w-[100px] rounded-md shadow shadow-gray-400 hover:shadow-sky-500 mt-5 hover:bg-sky-400 hover:text-gray-200 text-sm transition-all duration-200"
       >
         make room
+      </button>
+      <button
+        v-else
+        disabled
+        class="py-2 w-[100px] rounded-md shadow shadow-gray-400 hover:shadow-sky-500 mt-5 hover:bg-sky-400 hover:text-gray-200 text-sm transition-all duration-200"
+      >
+        loading...
       </button>
     </div>
   </div>

@@ -2,9 +2,10 @@ import { defineStore } from "pinia"
 
 export const store = defineStore('data',{
     state:()=>({
-         username : "",
-         peerId : "",
-         rooms:[]
+        loading:false,
+        username : "",
+        peerId : "",
+        rooms:[]
     }),
     actions:{
         setData(username,peerId){
@@ -13,6 +14,9 @@ export const store = defineStore('data',{
         },
         setRooms(rooms){
             this.rooms = rooms
+        },
+        setLoading(loading){
+            this.loading = loading
         }
     }
 })

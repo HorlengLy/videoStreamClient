@@ -15,6 +15,7 @@
         store().setRooms(rooms)
     })
     socket.on('response',({ms,room,success})=>{
+        store().setLoading(false)
         if(success) {
             socket.emit("getRooms",room);
             return router.replace({path:'/call/'+room})
@@ -32,6 +33,7 @@
         components:{Form},
         methods:{
             joinRoom:(username,room,isJoin)=>{
+                store().setLoading(true)
                 store().setData(username,window.peerId)
                 if(!username || !room) return alert('all field are required')
                 if(!window.peerId) return alert("Error Internet connection")
