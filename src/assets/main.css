@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Alkatra:wght@700&family=Bokor&family=Koulen&family=Lora:ital@1&family=Odor+Mean+Chey&family=Roboto:wght@300;400;500&family=Schibsted+Grotesk&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer components{
+  *{
+    @apply m-0 p-0 box-border text-base font-SG
+  }
+}
+body{
+  @apply overflow-hidden h-screen w-screen
+}
