@@ -35,7 +35,10 @@
             joinRoom:(username,room,isJoin)=>{
                 store().setLoading(true)
                 store().setData(username,window.peerId)
-                if(!username || !room) return alert('all field are required')
+                if(!username || !room) {
+                    store().setLoading(false)
+                    return alert('all field are required')
+                }
                 if(!window.peerId) return alert("Error Internet connection")
                 socket.emit("joinRoom",{username,room,peerId:window.peerId,isJoin})
             },
