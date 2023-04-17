@@ -24,6 +24,7 @@
     })
     export default{
         setup:()=>{
+            Notification.requestPermission()
             setTimeout(()=>innerTextAnimate())
             setInterval(()=>{
                 innerTextAnimate();
@@ -42,20 +43,29 @@
                 if(!window.peerId) return alert("Error Internet connection")
                 socket.emit("joinRoom",{username,room,peerId:window.peerId,isJoin})
             },
+            show(){
+                alert("sorry, it's in comming!")
+            }
         }
     }
 </script>
 
 
 <template>
-    <div class="lg:w-[80%] mx-auto bg-white py-[100px] h-full">
-        <div class="relative overflow-hidden w-fit mx-auto">
-            <span id="text-animate" class="md:text-3xl sm:text-xl text-lg font-lora font-bold text-gray-600"></span>
+    <div class="mx-auto bg-white lg:px-[100px] md:px-[50px] md:py-[50px] py-[10px] h-full">
+        <div class=" z-10 flex items-center justify-end w-full py-3 px-[20px]">
+          <ul class="flex md:gap-5 gap-2">
+            <li @click="show()" class="cursor-pointer font-lora font-semibold hover:text-green-600 border-2 border-transparent hover:border-b-green-600 transition-all duration-100 md:text-base text-gray-600 text-sm">Developer</li>
+            <li @click="show()" class="cursor-pointer font-lora font-semibold hover:text-green-600 border-2 border-transparent hover:border-b-green-600 transition-all duration-100 md:text-base text-gray-600 text-sm">DarkMode</li>
+          </ul>
+        </div>
+        <div class="relative overflow-hidden w-fit mx-auto mt-5">
+            <span id="text-animate" class="md:text-3xl sm:text-xl text-lg font-lora text-gray-600"></span>
         </div>
         <div class="flex md:flex-row flex-col gap-10 md:gap-5 mt-[50px]">
             <div class="flex-1 flex items-center justify-center rounded relative">
                 <img src="https://us.123rf.com/450wm/digitalgenetics/digitalgenetics1502/digitalgenetics150200036/37115314-3d-man-and-vintage-red-phone-on-white-background.jpg" alt="" class="sm:w-auto w-[250px]">
-                <span class="bg-sky-600 py-1 sm:px-5 px-2 rounded-full absolute text-gray-100 top-[30px] right-[20px] font-lora">Hi Baby</span>
+                <span class="bg-sky-600 py-1 sm:px-5 px-2 rounded-full absolute text-gray-100 sm:top-[30px] top-[5px] xl:right-[20px] md:right-[-50px] sm:right-[30px] right-[10px] font-lora">Hi Baby</span>
             </div>
             <div class="flex-1">
                 <div class="sm:w-[70%] w-[90%] mx-auto">
@@ -71,17 +81,7 @@
 
 
 <style>
-    label{
-        position: absolute;
-        transition: top .2s ease-out;
-        left: 20px;
-        top: 12px;
-    }
-    input:focus + label,input:valid + label,#room + label{
-        top: -10px;
-        background: #fff;
-        color: green;
-    }
+    
     #text-animate::before{
         content: '';
         position: absolute;

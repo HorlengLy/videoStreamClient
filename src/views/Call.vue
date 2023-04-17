@@ -14,11 +14,14 @@
         call.on("stream",friendStream=>{
             addStream(username,peerId,friendStream)
         })
-        alert(`${username} join room`)
+        // if(document.body.offsetWidth<500)
+        //    return alert(`${username} join room`)
+        pushNoti(`${username} join room`)
     })
     socket.on("user-left",peerId=>{
         document.getElementById(peerId)?.remove()
-        alert(`${getUser(peerId)?.username} was left the room`)
+        // alert(`${getUser(peerId)?.username} was left the room`)
+        pushNoti(`${getUser(peerId)?.username} was left the room`)
     })
     socket.on('screenChenged',peerId=>{
         alert(`${peerId} change screen`);
@@ -57,7 +60,20 @@
 
     // funtion
 
+
+    function pushNoti(ms){
+        const notification = new Notification("Video Caller",{
+            icon:"https://play-lh.googleusercontent.com/DeFtrBbTyGbOhe8Z7cfHa1fzeVuLPRP2kAVkLJ2igIK3gC-yQ-df8eJGC4zY-gpJ2Q",
+            body:ms
+        })
+        setTimeout(()=>{
+            notification.close();
+        },5000)
+
+    }
+    
     async function phoneCamera(firstime){
+        closeCamera()
         console.log('phone camera started');
         let type = ''
         if(reerCamera.value) type = "environment"
@@ -73,7 +89,6 @@
                 }
             })
             .then(stream=>{
-                if(window.localStream) closeCamera()
                 window.localStream = stream
                 const video = document.getElementById("localStream")
                 video.srcObject = stream;
@@ -99,7 +114,7 @@
                     video:true
                 })
                 .then(remoteStreem=>{
-                    if(window.localStream) closeCamera()
+                    closeCamera()
                     window.localStream = remoteStreem
                     const video = document.getElementById("localStream")
                     video.srcObject = remoteStreem;
@@ -120,7 +135,7 @@
                     audio:false,video:true
                 })
                 .then(remoteStreem=>{
-                    if(window.localStream) closeCamera()
+                    closeCamera()
                     window.localStream = remoteStreem
                     const video = document.getElementById("localStream")
                     video.srcObject = remoteStreem;
@@ -178,10 +193,19 @@
         div.append(span)
         document.querySelector("#call-container").append(div);
     }
+    function show(){
+        alert("sorry, it's in comming!")
+    }
 </script>
 <template>
-    <div class="py-[50px] h-full overflow-y-auto">
-        <div id="call-container" class="p-10 flex flex-wrap">
+    <div class="py-[30px] lg:px-[100px] md:px-[50px] h-full overflow-y-auto bg-white">
+        <div class=" z-10 flex items-center justify-end w-full py-3 px-[20px]">
+          <ul class="flex md:gap-5 gap-2">
+            <li @click="show()" class="cursor-pointer font-lora font-semibold hover:text-green-600 border-2 border-transparent hover:border-b-green-600 transition-all duration-100 md:text-base text-gray-600 text-sm">Developer</li>
+            <li @click="show()" class="cursor-pointer font-lora font-semibold hover:text-green-600 border-2 border-transparent hover:border-b-green-600 transition-all duration-100 md:text-base text-gray-600 text-sm">DarkMode</li>
+          </ul>
+        </div>
+        <div id="call-container" class="flex flex-wrap mt-10">
             <div class="videoCover z-0">
                 <video id="localStream"  src="" muted></video>
                 <span class="absolute text-xl left-0 right-0 mx-auto w-fit font-lora text-cyan-500">You</span>
@@ -194,6 +218,7 @@
                 </span>
             </div>
         </div>
+        <button class="py-2 absolute left-0 right-0 mx-auto bottom-10 w-[120px] border rounded hover:bg-red-600 hover:text-gray-50 transition-all duration-200 border-red-600">Leave</button>
     </div>
 </template>
 
@@ -220,6 +245,8 @@
         color: red;
         font-size: 20px;
         font-family: Lora;
-        left: 30%;
+        left: 0;
+        right: 0;
+        margin: auto;
     }
 </style>

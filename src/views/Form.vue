@@ -10,7 +10,7 @@
           const isJoinRoom = ref(false)
           return {code,room,username,isJoinRoom,copyText,store}
         },
-        props:['joinRoom']
+        props:['joinRoom'],
 
     } 
 </script>
@@ -115,3 +115,18 @@
     </div>
   </div>
 </template>
+
+
+<style>
+  label{
+        position: absolute;
+        transition: top .2s ease-out;
+        left: 20px;
+        top: 12px;
+    }
+    input:focus + label,input:valid + label,#room + label{
+        top: -10px;
+        background: #fff;
+        color: green;
+    }
+</style>
