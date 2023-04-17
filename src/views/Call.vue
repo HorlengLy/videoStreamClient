@@ -212,11 +212,11 @@
         <div id="call-container" class="flex justify-center flex-wrap mt-10 pb-[20px]">
             <div class="videoCover z-0">
                 <video id="localStream"  src="" muted></video>
-                <span class="absolute text-xl left-0 right-0 mx-auto w-fit font-lora text-cyan-500">You</span>
+                <span class="username self">You</span>
                 <span @click="phoneCamera(false)" class="absolute left-0 right-0 mx-auto w-fit bottom-5 cursor-pointer p-4 md:hidden block">
                     <font-awesome-icon :icon="['fas', 'camera-rotate']" size="xl" class="text-gray-400"/>
                 </span>
-                <span @click="openStream(false)" class="absolute left-0 right-0 mx-auto w-fit bottom-5 cursor-pointer p-4 md:block hidden">
+                <span @click="openStream(false)" class="absolute left-0 right-0 mx-auto w-fit bottom-10 cursor-pointer p-4 md:block hidden">
                     <font-awesome-icon :icon="['fas', 'desktop']" size="xl" class="text-gray-400" v-if="shareScreen"/>
                     <font-awesome-icon :icon="['fas', 'camera']" size="xl" class="text-gray-400" v-else/>
                 </span>
@@ -235,12 +235,12 @@
         width: 600px;
         overflow: hidden;
         height: 400px;
-        border-radius: 5px;
+        border-radius: 10px;
     }  
     .videoCover video{
         width: 100%;
         height: 100%;
-        border-radius: 5px;
+        border-radius: 10px;
     }
     .username{
         position: absolute;
@@ -252,7 +252,11 @@
         left: 0;
         right: 0;
         margin: auto;
-        bottom: 50px;
+        bottom: 30px;
+    }
+    .self{
+        color: gold;
+        bottom: 20px;
     }
     .owner{
         color: orange;
