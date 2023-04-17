@@ -17,11 +17,9 @@
     })
     socket.on("user-left",peerId=>{
         document.getElementById(peerId)?.remove()
-        // alert(`${getUser(peerId)?.username} was left the room`)
         pushNoti(`${getUser(peerId)?.username} was left the room`)
     })
     socket.on('screenChenged',peerId=>{
-        alert(`${peerId} change screen`);
         peer.connect(peerId)
         const call = peer.call(peerId,window.localStream)
         call.on("stream",friendStream=>{
@@ -178,6 +176,8 @@
         const div = document.createElement("div")
         div.classList.add("videoCover")
         span.textContent = name
+        if(isOwner(peerId))
+            span.classList.add('owner')
         span.classList.add("username")
         div.setAttribute("id",peerId)
         video.setAttribute('class',peerId)
@@ -193,7 +193,15 @@
         alert("sorry, it's in comming!")
     }
     function leave(){
-        window.location.href = "https://call-video.onrender.com";
+        window.location.href = "https://videocaller.netlify.app/";
+    }
+    function isOwner(peerId){
+        const room = store().rooms
+        // const owner = room.owner
+        const user = room?.members?.find(mem=>mem.peerId === peerId)
+        if(!user) return false
+        return user.socketId == room.owner;
+        
     }
 </script>
 <template>
@@ -230,6 +238,12 @@
         padding: 10px;
         width: 400px;
     }  
+    .owner{
+        color: orange;
+    }
+    .owner::after{
+        content: '@owner';
+    }
     .videoCover video{
         border-radius: 5px;
     }  
@@ -244,6 +258,7 @@
         color: red;
         font-size: 20px;
         font-family: Lora;
+        width: fit-content;
         left: 0;
         right: 0;
         margin: auto;
