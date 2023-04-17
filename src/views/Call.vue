@@ -252,7 +252,7 @@
         left: 0;
         right: 0;
         margin: auto;
-        bottom: 20px;
+        bottom: 50px;
     }
     .owner{
         color: orange;
