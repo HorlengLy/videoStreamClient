@@ -54,6 +54,10 @@
                 }
             },
             show(){
+                document.querySelector("#dev").classList.toggle('opacity-0')
+                document.querySelector("#dev").classList.toggle('z-[-1000]')
+                document.querySelector("#dev").classList.toggle('z-[1000]')
+                document.querySelector("#dev").classList.toggle('top-0')
                 document.querySelector("#dev").classList.toggle('top-[40px]')
             },
             developer(url){
@@ -65,9 +69,7 @@
                 document.documentElement.classList.add('dark');
                 document.querySelector("#checkbox").checked = true
                 document.querySelector("#text-animate").classList.add("text-animate-dark")
-                // document.querySelector("#text-animate-dark").setAttribute("id","")
             } else {
-                // document.querySelector("#text-animate-dark").setAttribute("id","text-animate")
                 document.documentElement.classList.remove('dark')
                 document.querySelector("#checkbox").checked = false
                 document.querySelector("#text-animate").classList.remove("text-animate-dark")
@@ -81,11 +83,11 @@
 <template>
     <div class="bg-white dark:bg-slate-700 lg:px-[100px] md:px-[50px] px-[10px] md:py-[40px] py-[10px] h-full overflow-y-auto">
         <div class="z-10 flex items-center justify-end md:gap-5 gap-3 w-full py-3 px-[20px]">
-            <div class="relative group">
-                <div @click="show()" class="cursor-pointer font-lora text-base font-semibold hover:text-green-600 dark:text-gray-300 capitalize tracking-widest border-2 border-transparent hover:border-b-green-600 transition-all duration-100 text-gray-600 ">
+            <div class="relative group"  @click="show">
+                <div class="cursor-pointer font-lora text-base font-semibold hover:text-green-600 dark:text-gray-300 capitalize tracking-widest border-2 border-transparent hover:border-b-green-600 transition-all duration-100 text-gray-600 ">
                     developer
                 </div>
-                <div id="dev" class="group-hover:top-[40px] group-hover:opacity-100 z-50 absolute shadow-md shadow-gray-300 dark:shadow-gray-500 bg-white dark:bg-slate-700 py-[30px] rounded w-[250px] top-[-500px] opacity-0 left-[-100%] transition-all duration-300 ease-out">
+                <div id="dev" class="z-[-1000] absolute shadow-md shadow-gray-300 dark:shadow-gray-500 bg-white dark:bg-slate-700 py-[30px] rounded w-[250px] opacity-0 left-[-100%] top-0 transition-all duration-300 ease-out">
                     <div class="flex justify-center gap-8 ">
                         <span @click="developer('https://www.facebook.com/Horlenggg?mibextid=ZbWKwL')" class="cursor-pointer relative">
                             <p class=" dark:text-gray-300 text-gray-600 text-xs font-lora absolute bottom-[-20px] left-[-10px]">Facebook</p>
