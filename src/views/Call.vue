@@ -128,7 +128,7 @@
         else{
             try{
                 await media.getUserMedia({
-                    audio:false,video:true
+                    audio:true,video:true
                 })
                 .then(remoteStreem=>{
                     closeCamera()
