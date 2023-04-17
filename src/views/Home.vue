@@ -52,7 +52,7 @@
 
 
 <template>
-    <div class="mx-auto bg-white lg:px-[100px] md:px-[50px] md:py-[50px] py-[10px] h-full">
+    <div class="mx-auto bg-white lg:px-[100px] md:px-[50px] md:py-[50px] py-[10px] h-full overflow-y-auto">
         <div class=" z-10 flex items-center justify-end w-full py-3 px-[20px]">
           <ul class="flex md:gap-5 gap-2">
             <li @click="show()" class="cursor-pointer font-lora font-semibold hover:text-green-600 border-2 border-transparent hover:border-b-green-600 transition-all duration-100 md:text-base text-gray-600 text-sm">Developer</li>
@@ -67,7 +67,7 @@
                 <img src="https://us.123rf.com/450wm/digitalgenetics/digitalgenetics1502/digitalgenetics150200036/37115314-3d-man-and-vintage-red-phone-on-white-background.jpg" alt="" class="sm:w-auto w-[250px]">
                 <span class="bg-sky-600 py-1 sm:px-5 px-2 rounded-full absolute text-gray-100 sm:top-[30px] top-[5px] xl:right-[20px] md:right-[-50px] sm:right-[30px] right-[10px] font-lora">Hi Baby</span>
             </div>
-            <div class="flex-1">
+            <div class="flex-1 pb-[50px]">
                 <div class="sm:w-[70%] w-[90%] mx-auto">
                     <Form :joinRoom="joinRoom"/>
                 </div>
