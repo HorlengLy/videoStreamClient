@@ -10,12 +10,9 @@
     socket.on('userJoinedRoom',({username,peerId})=>{
         peer.connect(peerId)
         const call = peer.call(peerId,window.localStream)
-        // console.log({ownStream:window.localStream});
         call.on("stream",friendStream=>{
             addStream(username,peerId,friendStream)
         })
-        // if(document.body.offsetWidth<500)
-        //    return alert(`${username} join room`)
         pushNoti(`${username} join room`)
     })
     socket.on("user-left",peerId=>{
@@ -39,7 +36,6 @@
     peer.on('call',(call)=>{
         call.answer(window.localStream)
         call.on('stream',stream=>{
-            // console.log({friendStream:stream});
             addStream(getUser(window.friendId)?.username,window.friendId,stream)
         })
     })
@@ -196,6 +192,9 @@
     function show(){
         alert("sorry, it's in comming!")
     }
+    function leave(){
+        window.location.href = "https://call-video.onrender.com";
+    }
 </script>
 <template>
     <div class="py-[30px] lg:px-[100px] md:px-[50px] h-full overflow-y-auto bg-white">
@@ -218,7 +217,7 @@
                 </span>
             </div>
         </div>
-        <button class="py-2 absolute left-0 right-0 mx-auto bottom-10 w-[120px] border rounded hover:bg-red-600 hover:text-gray-50 transition-all duration-200 border-red-600">Leave</button>
+        <button @click="leave()"  class="py-2 absolute left-0 right-0 mx-auto bottom-10 w-[120px] border rounded hover:bg-red-600 hover:text-gray-50 transition-all duration-200 border-red-600">Leave</button>
     </div>
 </template>
 
