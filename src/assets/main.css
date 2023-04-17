@@ -8,7 +8,7 @@
   }
 }
 body{
-  @apply overflow-hidden h-screen w-screen
+  @apply overflow-hidden h-screen w-screen  bg-white dark:bg-slate-700
 }
 
 ::-webkit-scrollbar {

@@ -5,7 +5,7 @@ import {Peer} from "peerjs"
 import { io } from 'socket.io-client'
 import {createWebHistory,createRouter} from 'vue-router'
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { fas } from "@fortawesome/free-solid-svg-icons";
+import { fas,faD,faB } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { createPinia } from 'pinia'
 export const socket = io("https://call-video.onrender.com",{transports: ['websocket', 'polling', 'flashsocket']});
@@ -37,6 +37,8 @@ export const router = createRouter({
     routes
 })
 library.add(fas);
+library.add(faD);
+library.add(faB);
 
 
 const app = createApp(App)

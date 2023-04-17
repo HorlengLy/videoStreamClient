@@ -24,11 +24,10 @@
     })
     export default{
         setup:()=>{
-            Notification.requestPermission()
-            setTimeout(()=>innerTextAnimate())
             setInterval(()=>{
                 innerTextAnimate();
             },16000)
+            Notification.requestPermission()
             return {}
         },
         components:{Form},
@@ -43,29 +42,88 @@
                 if(!window.peerId) return alert("Error Internet connection")
                 socket.emit("joinRoom",{username,room,peerId:window.peerId,isJoin})
             },
+            handleTheme:(e)=>{
+                console.log(e.target.checked);
+                if(e.target.checked){
+                    localStorage.setItem('color-theme','dark')
+                    document.documentElement.classList.add('dark');
+                }
+                else{
+                    localStorage.setItem('color-theme','light')
+                    document.documentElement.classList.remove('dark');
+                }
+            },
             show(){
-                alert("sorry, it's in comming!")
+                document.querySelector("#dev").classList.toggle('top-[40px]')
+            },
+            developer(url){
+                window.open(url);
             }
+        },
+        mounted(){
+            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                document.querySelector("#checkbox").checked = true
+                document.querySelector("#text-animate").classList.add("text-animate-dark")
+                // document.querySelector("#text-animate-dark").setAttribute("id","")
+            } else {
+                // document.querySelector("#text-animate-dark").setAttribute("id","text-animate")
+                document.documentElement.classList.remove('dark')
+                document.querySelector("#checkbox").checked = false
+                document.querySelector("#text-animate").classList.remove("text-animate-dark")
+            }
+            innerTextAnimate()
         }
     }
 </script>
 
 
 <template>
-    <div class="mx-auto bg-white lg:px-[100px] md:px-[50px] md:py-[50px] py-[10px] h-full overflow-y-auto">
-        <div class=" z-10 flex items-center justify-end w-full py-3 px-[20px]">
-          <ul class="flex md:gap-5 gap-2">
-            <li @click="show()" class="cursor-pointer font-lora font-semibold hover:text-green-600 border-2 border-transparent hover:border-b-green-600 transition-all duration-100 md:text-base text-gray-600 text-sm">Developer</li>
-            <li @click="show()" class="cursor-pointer font-lora font-semibold hover:text-green-600 border-2 border-transparent hover:border-b-green-600 transition-all duration-100 md:text-base text-gray-600 text-sm">DarkMode</li>
-          </ul>
+    <div class="bg-white dark:bg-slate-700 lg:px-[100px] md:px-[50px] px-[10px] md:py-[40px] py-[10px] h-full overflow-y-auto">
+        <div class="z-10 flex items-center justify-end md:gap-5 gap-3 w-full py-3 px-[20px]">
+            <div class="relative group">
+                <div @click="show" class="cursor-pointer font-lora text-base font-semibold hover:text-green-600 dark:text-gray-300 capitalize tracking-widest border-2 border-transparent hover:border-b-green-600 transition-all duration-100 text-gray-600 ">
+                    developer
+                </div>
+                <div id="dev" class="group-hover:top-[40px] group-hover:opacity-100 z-50 absolute shadow-md shadow-gray-300 dark:shadow-gray-500 bg-white dark:bg-slate-700 py-[30px] rounded w-[250px] top-[-500px] opacity-0 left-[-100%] transition-all duration-300 ease-out">
+                    <div class="flex justify-center gap-8 ">
+                        <span @click="developer('https://www.facebook.com/Horlenggg?mibextid=ZbWKwL')" class="cursor-pointer relative">
+                            <p class=" dark:text-gray-300 text-gray-600 text-xs font-lora absolute bottom-[-20px] left-[-10px]">Facebook</p>
+                            <svg class="w-[30px] fill-gray-600 dark:fill-gray-300 hover:fill-pink-500 dark:hover:fill-pink-500 transition-all duration-200"
+                            xmlns="http://www.w3.org/2000/svg" 
+                            viewBox="0 0 512 512">
+                            <path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/>
+                            </svg>
+                        </span>
+                        <span @click="developer('https://t.me/Horlenggg')" class="relative group cursor-pointer">
+                            <p class="dark:text-gray-300 text-gray-600 text-xs font-lora absolute bottom-[-20px] left-[-10px]">Telegram</p>
+                            <svg class="w-[30px] fill-gray-600 dark:fill-gray-300 hover:fill-pink-500 dark:hover:fill-pink-500 transition-all duration-200" 
+                                xmlns="http://www.w3.org/2000/svg" 
+                                viewBox="0 0 496 512">
+                                <path d="M248,8C111.033,8,0,119.033,0,256S111.033,504,248,504,496,392.967,496,256,384.967,8,248,8ZM362.952,176.66c-3.732,39.215-19.881,134.378-28.1,178.3-3.476,18.584-10.322,24.816-16.948,25.425-14.4,1.326-25.338-9.517-39.287-18.661-21.827-14.308-34.158-23.215-55.346-37.177-24.485-16.135-8.612-25,5.342-39.5,3.652-3.793,67.107-61.51,68.335-66.746.153-.655.3-3.1-1.154-4.384s-3.59-.849-5.135-.5q-3.283.746-104.608,69.142-14.845,10.194-26.894,9.934c-8.855-.191-25.888-5.006-38.551-9.123-15.531-5.048-27.875-7.717-26.8-16.291q.84-6.7,18.45-13.7,108.446-47.248,144.628-62.3c68.872-28.647,83.183-33.623,92.511-33.789,2.052-.034,6.639.474,9.61,2.885a10.452,10.452,0,0,1,3.53,6.716A43.765,43.765,0,0,1,362.952,176.66Z"/>
+                            </svg>
+                        </span>
+                    </div>
+                    <p class="mt-10 dark:text-gray-300 text-gray-600 font-lora text-xs mx-auto w-fit">@Horlenggg</p>
+                </div>
+            </div>
+          <div class="flex items-center gap-2">
+            <div class="switch-btn relative shadow-md shadow-gray-400 dark:shadow-gray-300 rounded-[20px] w-[100px] h-[35px]">
+                <input @change="handleTheme" type="checkbox" id="checkbox" class="opacity-0 z-0 absolute">
+                <label for="checkbox"></label>
+            </div>
+            <font-awesome-icon :icon="['faD', 'moon']" size="xl" class="text-gray-400"/>
+          </div>
         </div>
         <div class="relative overflow-hidden w-fit mx-auto mt-5">
-            <span id="text-animate" class="md:text-3xl sm:text-xl text-lg font-lora text-gray-600"></span>
+            <span id="text-animate" class="md:text-3xl sm:text-xl text-lg font-lora text-gray-600 dark:text-gray-300 
+            before:content-[''] before:absolute before:text-white before:bg-white dark:before:bg-slate-700 before:w-full 
+            before:h-full before:top-0 before:left-0 before:border-l-2 before:border-gray-700 dark:before:border-gray-300 before:animate-text-animation"></span>
         </div>
         <div class="flex md:flex-row flex-col gap-10 md:gap-5 mt-[50px]">
             <div class="flex-1 flex items-center justify-center rounded relative">
-                <img src="https://us.123rf.com/450wm/digitalgenetics/digitalgenetics1502/digitalgenetics150200036/37115314-3d-man-and-vintage-red-phone-on-white-background.jpg" alt="" class="sm:w-auto w-[250px]">
-                <span class="bg-sky-600 py-1 sm:px-5 px-2 rounded-full absolute text-gray-100 sm:top-[30px] top-[5px] xl:right-[20px] md:right-[-50px] sm:right-[30px] right-[10px] font-lora">Hi Baby</span>
+                <img src="../assets/Greeting.png" alt="" class="sm:w-auto w-[250px]">
+                <span class="bg-sky-600 dark:bg-gray-300 dark:text-gray-500 py-1 sm:px-5 px-2 rounded-full absolute text-gray-100 sm:top-[30px] top-[5px] xl:right-[20px] md:right-[-50px] sm:right-[30px] right-[10px] font-lora">Hi Baby</span>
             </div>
             <div class="flex-1 pb-[50px]">
                 <div class="sm:w-[70%] w-[90%] mx-auto">
@@ -81,24 +139,28 @@
 
 
 <style>
-    
-    #text-animate::before{
-        content: '';
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        left: 0;
-        top: 0;
-        border-left: 2px solid orange;
-        background: #fff;
-        animation: text-animate 4s steps(10) infinite;
+    input[type="checkbox"] + label{
+        cursor: pointer;
+        position: relative;
     }
-    @keyframes text-animate{
-        40%,60%{
-            left: 100%;
-        }
-        80%,100%{
-            left: 0;
-        }
+    input[type="checkbox"] + label::before{
+        content: 'OFF';
+        position: absolute;
+        color: #fff;
+        background: rgb(195, 195, 195);
+        width: 50px;
+        height: 25px;
+        left: -10px;
+        top: 15px;
+        text-align: center;
+        font-family: 'Lora';
+        border-radius: 20px;
+        transition: all .3s ease-in-out;
+    }
+    input[type="checkbox"]:checked + label::before{
+        content: 'ON';
+        position: absolute;
+        left: 20px;
+        background: rgb(12, 144, 20);
     }
 </style>

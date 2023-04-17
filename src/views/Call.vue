@@ -205,14 +205,11 @@
     }
 </script>
 <template>
-    <div class="lg:py-[30px] py-[10px] lg:px-[100px] md:px-[50px] h-full overflow-y-auto bg-white">
+    <div class="lg:py-[30px] py-[10px]  h-full overflow-y-auto bg-white dark:bg-slate-700">
         <div class=" z-10 flex items-center justify-end w-full py-3 px-[20px]">
-          <ul class="flex md:gap-5 gap-2">
-            <li @click="show()" class="cursor-pointer font-lora hover:text-green-600 border-2 border-transparent hover:border-b-green-600 transition-all duration-100 md:text-base text-gray-600 text-sm">Developer</li>
-            <li @click="leave()" class="cursor-pointer font-lora hover:text-red-600 border-2 border-transparent hover:border-b-red-600 transition-all duration-100 md:text-base text-gray-600 text-sm">Leave</li>
-          </ul>
+            <button @click="leave()" class="cursor-pointer font-lora border border-red-600 dark:border-gray-400 dark:hover:bg-gray-800 px-[20px] rounded-md hover:bg-red-600 hover:text-white py-2 transition-all duration-100 md:text-base text-gray-600 dark:text-gray-200 text-sm">Leave</button>
         </div>
-        <div id="call-container" class="flex flex-wrap mt-10 pb-[20px]">
+        <div id="call-container" class="flex justify-center flex-wrap mt-10 pb-[20px]">
             <div class="videoCover z-0">
                 <video id="localStream"  src="" muted></video>
                 <span class="absolute text-xl left-0 right-0 mx-auto w-fit font-lora text-cyan-500">You</span>
@@ -235,10 +232,19 @@
         position: relative;
         border-radius: 5px;
         padding: 10px;
-        width: 400px;
+        width: 600px;
+        overflow: hidden;
+        height: 400px;
+        border-radius: 5px;
     }  
+    .videoCover video{
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+    }
     .username{
         position: absolute;
+        z-index: 100;
         color: red;
         font-size: 20px;
         font-family: Lora;
@@ -246,6 +252,7 @@
         left: 0;
         right: 0;
         margin: auto;
+        bottom: 20px;
     }
     .owner{
         color: orange;
@@ -253,12 +260,10 @@
     .owner::after{
         content: '  =>Owner';
     }
-    .videoCover video{
-        border-radius: 5px;
-    }  
-    @media screen and (max-width:600px){
+    @media screen and (max-width:1000px){
         .videoCover{
             width: 98%;
+            height: auto;
             margin: auto;
         }
     }
