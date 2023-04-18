@@ -81,7 +81,7 @@
 
 
 <template>
-    <div class="bg-white dark:bg-slate-700 transition-all duration-1000 lg:px-[100px] md:px-[50px] px-[10px] md:py-[40px] py-[10px] h-full overflow-y-auto">
+    <div class="xl:w-[80%] md:w-[90%] w-full mx-auto bg-white dark:bg-slate-700 transition-all duration-1000 lg:px-[100px] md:px-[50px] px-[10px] md:py-[40px] py-[10px] h-full overflow-y-auto">
         <div class="z-10 flex items-center justify-between sm:justify-end md:gap-5 gap-3 w-full py-3 px-[20px]">
             <div class="relative group"  @click="show">
                 <div class="cursor-pointer font-lora text-base font-semibold hover:text-green-600 dark:text-gray-300 capitalize tracking-widest border-2 border-transparent hover:border-b-green-600 transition-all duration-1000 text-gray-600 ">
@@ -125,7 +125,7 @@
         <div class="flex md:flex-row flex-col gap-10 md:gap-5 mt-[50px]">
             <div class="flex-1 flex items-center justify-center rounded relative">
                 <img src="../assets/Greeting.png" alt="" class="sm:w-auto w-[250px]">
-                <span class="transition-all duration-1000 bg-sky-600 dark:bg-gray-300 dark:text-gray-500 py-1 sm:px-5 px-2 rounded-full absolute text-gray-100 sm:top-[30px] top-[5px] xl:right-[20px] md:right-[-50px] sm:right-[30px] right-[10px] font-lora">Hi Baby</span>
+                <span class="transition-all duration-1000 bg-sky-600 dark:bg-gray-300 dark:text-gray-500 py-1 sm:px-5 px-2 rounded-full absolute text-gray-100 sm:top-[10px] top-[5px] xl:right-0 lg:right-[-50px] sm:right-[-30px] right-[70px] font-lora">Hi Baby</span>
             </div>
             <div class="flex-1 pb-[50px]">
                 <div class="sm:w-[70%] w-[90%] mx-auto">

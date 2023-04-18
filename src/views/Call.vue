@@ -205,7 +205,7 @@
     }
 </script>
 <template>
-    <div class="transition-all duration-1000 lg:py-[30px] py-[10px]  h-full overflow-y-auto bg-white dark:bg-slate-700">
+    <div class="xl:w-[80%] md:w-[90%] w-full mx-auto transition-all duration-1000 lg:py-[30px] py-[10px]  h-full overflow-y-auto bg-white dark:bg-slate-700">
         <div class=" z-10 flex items-center justify-end w-full py-3 px-[20px]">
             <button @click="leave()" class=" cursor-pointer font-lora border border-red-600 dark:border-gray-400 dark:hover:bg-gray-800 px-[20px] rounded-md hover:bg-red-600 hover:text-white py-2 transition-all duration-1000 md:text-base text-gray-600 dark:text-gray-200 text-sm">Leave</button>
         </div>
