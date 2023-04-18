@@ -205,9 +205,9 @@
     }
 </script>
 <template>
-    <div class="lg:py-[30px] py-[10px]  h-full overflow-y-auto bg-white dark:bg-slate-700">
+    <div class="transition-all duration-1000 lg:py-[30px] py-[10px]  h-full overflow-y-auto bg-white dark:bg-slate-700">
         <div class=" z-10 flex items-center justify-end w-full py-3 px-[20px]">
-            <button @click="leave()" class="cursor-pointer font-lora border border-red-600 dark:border-gray-400 dark:hover:bg-gray-800 px-[20px] rounded-md hover:bg-red-600 hover:text-white py-2 transition-all duration-100 md:text-base text-gray-600 dark:text-gray-200 text-sm">Leave</button>
+            <button @click="leave()" class=" cursor-pointer font-lora border border-red-600 dark:border-gray-400 dark:hover:bg-gray-800 px-[20px] rounded-md hover:bg-red-600 hover:text-white py-2 transition-all duration-1000 md:text-base text-gray-600 dark:text-gray-200 text-sm">Leave</button>
         </div>
         <div id="call-container" class="flex justify-center flex-wrap mt-10 pb-[20px]">
             <div class="videoCover z-0">

@@ -40,7 +40,7 @@
         @keyup.enter="joinRoom(username, code)"
         class="border focus:ring-2 focus:border-transparent transition-all duration-200 ring-sky-300 text-gray-600 dark:text-gray-300 bg-inherit py-2 px-5 rounded-md outline-none w-full"
       />
-      <label for="username" class="text-sm bg-white dark:bg-slate-700  text-gray-600 dark:text-gray-300">Username</label>
+      <label for="username" class="transition-all duration-1000 text-sm bg-white dark:bg-slate-700  text-gray-600 dark:text-gray-300">Username</label>
     </div>
     <div class="relative mx-auto mt-6">
       <input
@@ -50,7 +50,7 @@
         @keyup.enter="joinRoom(username, code,true)"
         class="border  focus:ring-2 focus:border-transparent transition-all duration-200 ring-sky-300 text-gray-600 dark:text-gray-300 bg-inherit py-2 px-5 rounded-md outline-none w-full"
       />
-      <label for="code" class="text-sm bg-white dark:bg-slate-700  text-gray-600 dark:text-gray-300">Room</label>
+      <label for="code" class="transition-all duration-1000 text-sm bg-white dark:bg-slate-700  text-gray-600 dark:text-gray-300">Room</label>
     </div>
     <div class="flex justify-end">
       <button
@@ -78,7 +78,7 @@
         @keyup.enter="joinRoom(username, room,false)"
         class="border  focus:ring-2 focus:border-transparent transition-all duration-200 ring-sky-300 text-gray-600 dark:text-gray-300 bg-inherit py-2 px-5 rounded-md outline-none w-full"
       />
-      <label for="username" class="text-sm bg-white dark:bg-slate-700  text-gray-600 dark:text-gray-300">Username</label>
+      <label for="username" class="transition-all duration-1000 text-sm bg-white dark:bg-slate-700  text-gray-600 dark:text-gray-300">Username</label>
     </div>
     <div class="relative mx-auto mt-6">
       <input
@@ -88,7 +88,7 @@
         type="text"
         class="border bg-inherit py-2 px-5 rounded-md outline-none w-full  text-gray-600 dark:text-gray-300"
       />
-      <label for="room" class="text-sm  bg-white dark:bg-slate-700  text-gray-600 dark:text-gray-300">Room</label>
+      <label for="room" class="transition-all duration-1000 text-sm  bg-white dark:bg-slate-700  text-gray-600 dark:text-gray-300">Room</label>
       <span
         id="btnCopy"
         @click="copyText()"

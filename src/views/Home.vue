@@ -81,13 +81,13 @@
 
 
 <template>
-    <div class="bg-white dark:bg-slate-700 lg:px-[100px] md:px-[50px] px-[10px] md:py-[40px] py-[10px] h-full overflow-y-auto">
-        <div class="z-10 flex items-center justify-end md:gap-5 gap-3 w-full py-3 px-[20px]">
+    <div class="bg-white dark:bg-slate-700 transition-all duration-1000 lg:px-[100px] md:px-[50px] px-[10px] md:py-[40px] py-[10px] h-full overflow-y-auto">
+        <div class="z-10 flex items-center justify-between sm:justify-end md:gap-5 gap-3 w-full py-3 px-[20px]">
             <div class="relative group"  @click="show">
-                <div class="cursor-pointer font-lora text-base font-semibold hover:text-green-600 dark:text-gray-300 capitalize tracking-widest border-2 border-transparent hover:border-b-green-600 transition-all duration-100 text-gray-600 ">
+                <div class="cursor-pointer font-lora text-base font-semibold hover:text-green-600 dark:text-gray-300 capitalize tracking-widest border-2 border-transparent hover:border-b-green-600 transition-all duration-1000 text-gray-600 ">
                     developer
                 </div>
-                <div id="dev" class="z-[-1000] absolute shadow-md shadow-gray-300 dark:shadow-gray-500 bg-white dark:bg-slate-700 py-[30px] rounded w-[250px] opacity-0 left-[-100%] top-0 transition-all duration-300 ease-out">
+                <div id="dev" class="z-[-1000] absolute shadow-md shadow-gray-300 dark:shadow-gray-500 bg-white dark:bg-slate-700 py-[30px] rounded w-[250px] opacity-0 sm:left-[-100%] left-[-50%] top-0 transition-all duration-300 ease-out">
                     <div class="flex justify-center gap-8 ">
                         <span @click="developer('https://www.facebook.com/Horlenggg?mibextid=ZbWKwL')" class="cursor-pointer relative">
                             <p class=" dark:text-gray-300 text-gray-600 text-xs font-lora absolute bottom-[-20px] left-[-10px]">Facebook</p>
@@ -119,13 +119,13 @@
         </div>
         <div class="relative overflow-hidden w-fit mx-auto mt-5">
             <span id="text-animate" class="md:text-3xl sm:text-xl text-lg font-lora text-gray-600 dark:text-gray-300 
-            before:content-[''] before:absolute before:text-white before:bg-white dark:before:bg-slate-700 before:w-full 
+            before:content-[''] before:absolute transition-all duration-1000 before:text-white before:bg-white dark:before:bg-slate-700 before:w-full 
             before:h-full before:top-0 before:left-0 before:border-l-2 before:border-gray-700 dark:before:border-gray-300 before:animate-text-animation"></span>
         </div>
         <div class="flex md:flex-row flex-col gap-10 md:gap-5 mt-[50px]">
             <div class="flex-1 flex items-center justify-center rounded relative">
                 <img src="../assets/Greeting.png" alt="" class="sm:w-auto w-[250px]">
-                <span class="bg-sky-600 dark:bg-gray-300 dark:text-gray-500 py-1 sm:px-5 px-2 rounded-full absolute text-gray-100 sm:top-[30px] top-[5px] xl:right-[20px] md:right-[-50px] sm:right-[30px] right-[10px] font-lora">Hi Baby</span>
+                <span class="transition-all duration-1000 bg-sky-600 dark:bg-gray-300 dark:text-gray-500 py-1 sm:px-5 px-2 rounded-full absolute text-gray-100 sm:top-[30px] top-[5px] xl:right-[20px] md:right-[-50px] sm:right-[30px] right-[10px] font-lora">Hi Baby</span>
             </div>
             <div class="flex-1 pb-[50px]">
                 <div class="sm:w-[70%] w-[90%] mx-auto">
