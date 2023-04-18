@@ -124,11 +124,11 @@
             before:h-full before:top-0 before:left-0 before:border-l-2 before:border-gray-700 dark:before:border-gray-300 before:animate-text-animation"></span>
         </div>
         <div class="flex md:flex-row flex-col gap-10 md:gap-5 mt-[50px]">
-            <div class="flex-1 flex items-center justify-center rounded relative">
-                <img src="../assets/Greeting.png" alt="" class="sm:w-auto w-[250px]">
-                <span class="transition-all duration-1000 bg-sky-600 dark:bg-gray-300 dark:text-gray-500 py-1 sm:px-5 px-2 rounded-full absolute text-gray-100 sm:top-[10px] top-[5px] xl:right-0 lg:right-[-50px] sm:right-[-30px] right-[70px] font-lora">Hi Baby</span>
+            <div class="flex-1 flex items-center lg:justify-start sm:justify-center justify-start rounded relative">
+                <img src="../assets/Greeting.png" alt="" class="sm:w-auto  w-[250px]">
+                <span class="transition-all duration-1000 bg-sky-600 dark:bg-gray-300 dark:text-gray-500 py-1 sm:px-5 px-2 rounded-full absolute text-gray-100 sm:top-[10px] top-[5px] md:right-[-30px] right-[50px] font-lora">Hi Baby</span>
             </div>
-            <div class="flex-1 pb-[50px]">
+            <div class="flex-1 sm:pb-[20px] pb-[200px]">
                 <div class="sm:w-[70%] w-[90%] mx-auto">
                     <Form :joinRoom="joinRoom"/>
                 </div>

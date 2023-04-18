@@ -9,7 +9,7 @@ export const copyText = ()=>{
     text.select();
     text.setSelectionRange(0, 99999);
     navigator.clipboard.writeText(text.value);
-    document.querySelector("#btnCopy").classList.add("bg-green-600")
+    document.querySelector("#btnCopy").classList.add("dark:bg-green-600")
     document.querySelector("#btnCopy").textContent = "copied";
 }
 
