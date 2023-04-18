@@ -1,12 +1,12 @@
 <script setup>
     import { ref,onMounted,watch } from "vue";
     import { socket,peer } from "../main";
+    import {reerConstrain,frontConstrain} from "../data"
     import { store } from "../Store";
-    // const reerCamera = ref(false)
-    // const shareScreen = ref(false)
+    const reerCamera = ref(false)
+    const screenShare = ref(false)
     const localStream = ref(null)
     const ownVideoStream = ref(null)
-    const friendStream = ref([])
     // event
     peer.on('connection',(conn)=>{
         window.friendId = conn.peer;
@@ -14,23 +14,10 @@
     socket.on('userJoinedRoom',({username,peerId})=>{
         peer.connect(peerId)
         pushNoti(`${username} join room`)
-        // callFriend(peerId,getUser(peerId)?.username)
     })
     socket.on("user-left",peerId=>{
         document.getElementById(peerId)?.remove()
         pushNoti(`${getUser(peerId)?.username} was left the room`)
-    })
-    socket.on('screenChenged',async(peerId)=>{
-        peer.connect(peerId)
-        const call = peer.call(peerId,window.localStream)
-        call.on("stream",friendStream=>{
-            const video = document.getElementsByClassName(peerId)[0]
-            if(!video) return
-            video.srcObject = friendStream
-            video.addEventListener('loadedmetadata',()=>{
-                video.play()
-            })
-        })
     })
     peer.on('call',async(call)=>{
         call.answer(localStream.value)
@@ -40,9 +27,8 @@
     })
 
     onMounted(async function(){
-        await navigator.mediaDevices.getUserMedia({
-                video:true,audio:true,
-            }).then(remoteStreem=>{
+        await navigator.mediaDevices.getUserMedia(frontConstrain)
+        .then(remoteStreem=>{
                 localStream.value = remoteStreem
                 ownVideoStream.value.srcObject = remoteStreem;
                 ownVideoStream.value.addEventListener('loadedmetadata',()=>{
@@ -53,7 +39,7 @@
                     peer.connect(member.peerId)
                     if(member.peerId == store().peerId) return
                     const call = peer.call(member.peerId,remoteStreem)
-                    await call.on('stream',stream=>{
+                    call.on('stream',stream=>{
                         addStream(member.username,member.peerId,stream)
                     })
                 })
@@ -70,6 +56,84 @@
 
     // funtion
 
+    async function switchCamera(){
+        closeCamera()
+        if(reerCamera){
+            await navigator.mediaDevices.getUserMedia(reerConstrain)
+            .then(async(remoteStream)=>{
+                localStream.value = remoteStream
+                ownVideoStream.value.srcObject = remoteStream;
+                ownVideoStream.value.addEventListener('loadedmetadata',()=>{
+                    ownVideoStream.value.play();
+                })
+                const members = store().rooms?.members
+                members?.forEach(async(member)=>{
+                    peer.connect(member.peerId)
+                    if(member.peerId == store().peerId) return
+                    const call = peer.call(member.peerId,remoteStream)
+                    call.on('stream',stream=>{
+                        addStream(member.username,member.peerId,stream)
+                    })
+                })
+                reerCamera.value = !reerCamera.value
+            })
+        }
+        else{
+            await navigator.mediaDevices.getUserMedia(frontConstrain)
+            .then((remoteStream)=>{
+                localStream.value = remoteStream
+                ownVideoStream.value.srcObject = remoteStream;
+                ownVideoStream.value.addEventListener('loadedmetadata',()=>{
+                    ownVideoStream.value.play();
+                })
+                const members = store().rooms?.members
+                members?.forEach((member)=>{
+                    peer.connect(member.peerId)
+                    if(member.peerId == store().peerId) return
+                    const call = peer.call(member.peerId,remoteStream)
+                    call.on('stream',stream=>{
+                        addStream(member.username,member.peerId,stream)
+                    })
+                })
+                reerCamera.value = !reerCamera.value
+            })
+        }
+        
+        screenShare.value = false
+    }
+
+   async function shareScreen(){
+       try{
+            await navigator.mediaDevices.getDisplayMedia({video:true,audio:true,})
+            .then(remoteStream=>{
+                closeCamera()
+                localStream.value = remoteStream
+                ownVideoStream.value.srcObject = remoteStream;
+                ownVideoStream.value.addEventListener('loadedmetadata',()=>{
+                    ownVideoStream.value.play();
+                })
+                const members = store().rooms?.members
+                members?.forEach((member)=>{
+                    peer.connect(member.peerId)
+                    if(member.peerId == store().peerId) return
+                    const call = peer.call(member.peerId,remoteStream)
+                    call.on('stream',stream=>{
+                        addStream(member.username,member.peerId,stream)
+                    })
+                })
+                screenShare.value = true
+            })
+        }catch(err){
+            console.log(err);
+        }
+    }
+
+    function closeCamera(){
+        if(localStream.value) {
+            const tracks = localStream.value.getTracks()
+            tracks.forEach(track=>track.stop())
+        }
+    }
 
     function pushNoti(ms){
         const notification = new Notification("Video Caller",{
@@ -110,6 +174,7 @@
         div.append(span)
         document.querySelector("#call-container").append(div);
     }
+    
     function isOwner(peerId){
         const room = store().rooms
         const user = room?.members?.find(mem=>mem.peerId === peerId)
@@ -120,20 +185,24 @@
 </script>
 <template>
     <div class="xl:w-[80%] md:w-[90%] w-full mx-auto transition-all duration-1000 lg:py-[30px] py-[20px]  h-full overflow-y-auto bg-white dark:bg-slate-700">
-        <div class=" z-10 flex items-center justify-end w-full py-3 px-[20px]">
+        <div class="sm:pt-0 pt-10 z-10 flex items-center justify-between w-full py-3 px-[20px]">
+            <div>
+                <span @click="switchCamera()" class="cursor-pointer p-4 sm:hidden block">
+                    <button class="py-2 px-4 text-gray-500 transition-all duration-200 hover:text-gray-100 dark:hover:text-gray-100 hover:bg-[#17801c] dark:hover:bg-[#17801c] bg-[#b9d7d9] dark:text-gray-200 dark:bg-[#668284] rounded-md">switch camera</button>
+                </span>
+                <span  v-if="!screenShare" @click="shareScreen()" class="cursor-pointer p-4 sm:block hidden">
+                    <button class="py-2 px-4 text-gray-500 transition-all duration-200 hover:text-gray-100 dark:hover:text-gray-100 hover:bg-[#17801c] dark:hover:bg-[#17801c] bg-[#b9d7d9] dark:text-gray-200 dark:bg-[#668284] rounded-md">share screen</button>
+                </span>
+                <span v-else @click="switchCamera()" class="cursor-pointer p-4 sm:block hidden">
+                    <button class="py-2 px-4 text-gray-500 transition-all duration-200 hover:text-gray-100 dark:hover:text-gray-100 hover:bg-[#17801c] dark:hover:bg-[#17801c] bg-[#b9d7d9] dark:text-gray-200 dark:bg-[#668284] rounded-md">open camera</button>
+                </span>
+            </div>
             <button @click="leave()" class=" cursor-pointer font-lora border border-red-600 dark:border-gray-400 dark:hover:bg-gray-800 px-[20px] rounded-md hover:bg-red-600 hover:text-white py-2 transition-all duration-1000 md:text-base text-gray-600 dark:text-gray-200 text-sm">Leave</button>
         </div>
         <div id="call-container" class="lg:grid lg:grid-cols-2 w-full mt-1 pb-[20px]">
             <div class="videoCover z-0">
-                <video  ref="ownVideoStream"  src="" muted></video> 
+                <video  ref="ownVideoStream"  src=""></video> 
                 <span class="username self">You</span>
-                <!-- <span @click="phoneCamera(false)" class="absolute left-0 right-0 mx-auto w-fit bottom-5 cursor-pointer p-4 md:hidden block">
-                    <font-awesome-icon :icon="['fas', 'camera-rotate']" size="xl" class="text-gray-400"/>
-                </span> -->
-                <!-- <span @click="openStream(false)" class="absolute left-0 right-0 mx-auto w-fit bottom-10 cursor-pointer p-4 md:block hidden">
-                    <font-awesome-icon :icon="['fas', 'desktop']" size="xl" class="text-gray-400" v-if="shareScreen"/>
-                    <font-awesome-icon :icon="['fas', 'camera']" size="xl" class="text-gray-400" v-else/>
-                </span> -->
             </div>
         </div>
     </div>
@@ -159,8 +228,8 @@
     .username{
         position: absolute;
         z-index: 100;
-        color: red;
-        font-size: 20px;
+        color: #99b333;
+        font-size: 25px;
         font-family: Lora;
         width: fit-content;
         left: 0;
@@ -169,11 +238,11 @@
         bottom: 30px;
     }
     .self{
-        color: gold;
+        color: #21a42c;
         bottom: 20px;
     }
     .owner{
-        color: orange;
+        color: #aeea00;
     }
     .owner::after{
         content: '  =>Owner';

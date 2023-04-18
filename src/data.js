@@ -4,6 +4,21 @@ export const generatorRoom = ()=>{
     return date.toString(36);
 }
 
+export const reerConstrain = {
+    video:{
+        facingMode:'environment',
+        height:{min:100,max:300}
+    },
+    audio:true,
+}
+export const frontConstrain = {
+    video:{
+        facingMode:'user',
+        height:{min:100,max:300}
+    },
+    audio:true,
+}
+
 export const copyText = ()=>{
     const text = document.querySelector("#room");
     text.select();

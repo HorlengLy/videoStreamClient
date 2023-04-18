@@ -6,6 +6,9 @@ export default {
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
+    // colors:{
+    //   'dev':'#51647a',
+    // },
     screens: {
       'sm': '500px',
       // => @media (min-width: 640px) { ... }
