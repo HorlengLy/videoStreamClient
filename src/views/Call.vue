@@ -1,25 +1,26 @@
 <script setup>
-    import { ref,onMounted } from "vue";
+    import { ref,onMounted,watch } from "vue";
     import { socket,peer } from "../main";
     import { store } from "../Store";
-    const reerCamera = ref(false)
-    const shareScreen = ref(false)
+    // const reerCamera = ref(false)
+    // const shareScreen = ref(false)
+    const localStream = ref(null)
+    const ownVideoStream = ref(null)
+    const friendStream = ref([])
+    // event
     peer.on('connection',(conn)=>{
         window.friendId = conn.peer;
     })
     socket.on('userJoinedRoom',({username,peerId})=>{
         peer.connect(peerId)
-        const call = peer.call(peerId,window.localStream)
-        call.on("stream",friendStream=>{
-            addStream(username,peerId,friendStream)
-        })
         pushNoti(`${username} join room`)
+        // callFriend(peerId,getUser(peerId)?.username)
     })
     socket.on("user-left",peerId=>{
         document.getElementById(peerId)?.remove()
         pushNoti(`${getUser(peerId)?.username} was left the room`)
     })
-    socket.on('screenChenged',peerId=>{
+    socket.on('screenChenged',async(peerId)=>{
         peer.connect(peerId)
         const call = peer.call(peerId,window.localStream)
         call.on("stream",friendStream=>{
@@ -31,26 +32,41 @@
             })
         })
     })
-    peer.on('call',(call)=>{
-        call.answer(window.localStream)
+    peer.on('call',async(call)=>{
+        call.answer(localStream.value)
         call.on('stream',stream=>{
             addStream(getUser(window.friendId)?.username,window.friendId,stream)
         })
     })
-    
+
+    onMounted(async function(){
+        await navigator.mediaDevices.getUserMedia({
+                video:true,audio:true,
+            }).then(remoteStreem=>{
+                localStream.value = remoteStreem
+                ownVideoStream.value.srcObject = remoteStreem;
+                ownVideoStream.value.addEventListener('loadedmetadata',()=>{
+                    ownVideoStream.value.play();
+                })
+                const members = store().rooms?.members
+                members?.forEach(async(member)=>{
+                    peer.connect(member.peerId)
+                    if(member.peerId == store().peerId) return
+                    const call = peer.call(member.peerId,remoteStreem)
+                    await call.on('stream',stream=>{
+                        addStream(member.username,member.peerId,stream)
+                    })
+                })
+            })
+    })
+    function leave(){
+        window.location.href = "https://videocaller.netlify.app/";
+    }
     function getUser(peerId){
         return store().rooms?.members?.find(member=>member.peerId===peerId)
     }
 
 
-    onMounted(()=>{
-        if(document.body.offsetWidth>600){
-            openStream(true)
-        }
-        else {
-            phoneCamera(true)
-        }
-    })
 
     // funtion
 
@@ -64,101 +80,6 @@
             notification.close();
         },5000)
 
-    }
-    
-    async function phoneCamera(firstime){
-        console.log('phone camera started');
-        let type = ''
-        if(reerCamera.value) type = "environment"
-        else type = "user"
-        closeCamera()
-        const media = navigator.mediaDevices.getUserMedia
-        try{
-            await media({
-                audio:true,
-                video:{
-                    facingMode:type,
-                    width:{min:200,max:400},
-                    height:{min:200,max:500}
-                }
-            })
-            .then(stream=>{
-                window.localStream = stream
-                const video = document.getElementById("localStream")
-                video.srcObject = stream;
-                video.addEventListener('loadedmetadata',()=>{
-                    video.play();
-                })
-                reerCamera.value = !reerCamera.value
-                if(firstime) return
-                socket.emit('changeScreen',{room:store().rooms.room,peerId:store().peerId})
-            })
-        }catch(e){
-            console.log(e);
-        }
-    }
-
-    async function openStream(firstime){
-        console.log('pc camera started');
-        const media = navigator.mediaDevices
-        if(shareScreen.value){
-            try{
-                await media.getDisplayMedia({
-                    audio:true,
-                    video:true
-                })
-                .then(remoteStreem=>{
-                    closeCamera()
-                    window.localStream = remoteStreem
-                    const video = document.getElementById("localStream")
-                    video.srcObject = remoteStreem;
-                    video.addEventListener('loadedmetadata',()=>{
-                        video.play();
-                    })
-                    shareScreen.value = !shareScreen.value
-                    if(firstime) return
-                    socket.emit('changeScreen',{room:store().rooms.room,peerId:store().peerId})
-                })
-            } catch(e){
-                console.log(e);
-            }
-        }
-        else{
-            try{
-                await media.getUserMedia({
-                    audio:true,video:true
-                })
-                .then(remoteStreem=>{
-                    closeCamera()
-                    window.localStream = remoteStreem
-                    const video = document.getElementById("localStream")
-                    video.srcObject = remoteStreem;
-                    video.addEventListener('loadedmetadata',()=>{
-                        video.play();
-                    })
-                    shareScreen.value = !shareScreen.value
-                    if(firstime) return
-                    socket.emit('changeScreen',{room:store().rooms.room,peerId:store().peerId})
-                })
-            }catch(e){
-                console.log(e);
-            }
-        }
-    }
-
-    function closeCamera(){
-        const stream = document.getElementById("localStream").srcObject;
-        try{
-            if (stream) {
-                const tracks = stream.getTracks();
-                tracks.forEach(function (track) {
-                    track.stop();
-                });
-                stream.srcObject = null
-            }
-        }catch(err){
-            console.log(err);
-        }
     }
     
     function addStream(name,peerId,stream){
@@ -189,15 +110,8 @@
         div.append(span)
         document.querySelector("#call-container").append(div);
     }
-    function show(){
-        alert("sorry, it's in comming!")
-    }
-    function leave(){
-        window.location.href = "https://videocaller.netlify.app/";
-    }
     function isOwner(peerId){
         const room = store().rooms
-        // const owner = room.owner
         const user = room?.members?.find(mem=>mem.peerId === peerId)
         if(!user) return false
         return user.socketId == room.owner;
@@ -205,21 +119,21 @@
     }
 </script>
 <template>
-    <div class="xl:w-[80%] md:w-[90%] w-full mx-auto transition-all duration-1000 lg:py-[30px] py-[10px]  h-full overflow-y-auto bg-white dark:bg-slate-700">
+    <div class="xl:w-[80%] md:w-[90%] w-full mx-auto transition-all duration-1000 lg:py-[30px] py-[20px]  h-full overflow-y-auto bg-white dark:bg-slate-700">
         <div class=" z-10 flex items-center justify-end w-full py-3 px-[20px]">
             <button @click="leave()" class=" cursor-pointer font-lora border border-red-600 dark:border-gray-400 dark:hover:bg-gray-800 px-[20px] rounded-md hover:bg-red-600 hover:text-white py-2 transition-all duration-1000 md:text-base text-gray-600 dark:text-gray-200 text-sm">Leave</button>
         </div>
-        <div id="call-container" class="flex justify-center flex-wrap mt-10 pb-[20px]">
+        <div id="call-container" class="lg:grid lg:grid-cols-2 w-full mt-1 pb-[20px]">
             <div class="videoCover z-0">
-                <video id="localStream"  src="" muted></video>
+                <video  ref="ownVideoStream"  src="" muted></video> 
                 <span class="username self">You</span>
-                <span @click="phoneCamera(false)" class="absolute left-0 right-0 mx-auto w-fit bottom-5 cursor-pointer p-4 md:hidden block">
+                <!-- <span @click="phoneCamera(false)" class="absolute left-0 right-0 mx-auto w-fit bottom-5 cursor-pointer p-4 md:hidden block">
                     <font-awesome-icon :icon="['fas', 'camera-rotate']" size="xl" class="text-gray-400"/>
-                </span>
-                <span @click="openStream(false)" class="absolute left-0 right-0 mx-auto w-fit bottom-10 cursor-pointer p-4 md:block hidden">
+                </span> -->
+                <!-- <span @click="openStream(false)" class="absolute left-0 right-0 mx-auto w-fit bottom-10 cursor-pointer p-4 md:block hidden">
                     <font-awesome-icon :icon="['fas', 'desktop']" size="xl" class="text-gray-400" v-if="shareScreen"/>
                     <font-awesome-icon :icon="['fas', 'camera']" size="xl" class="text-gray-400" v-else/>
-                </span>
+                </span> -->
             </div>
         </div>
     </div>
@@ -232,9 +146,9 @@
         position: relative;
         border-radius: 5px;
         padding: 10px;
-        width: 600px;
+        width: 100%;
         overflow: hidden;
-        height: 400px;
+        height: auto;
         border-radius: 10px;
     }  
     .videoCover video{
@@ -269,6 +183,10 @@
             width: 98%;
             height: auto;
             margin: auto;
+            border-radius: 10px;
+        }
+        .videoCover video{
+            border-radius: 10px;
         }
     }
 </style>

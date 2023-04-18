@@ -15,7 +15,7 @@
     } 
 </script>
 <template>
-  <div class="flex items-center w-full justify-center">
+  <div class="flex cursor-pointer items-center w-full justify-center">
     <button
       @click="() => isJoinRoom = false"
       :class="[{ 'text-gray-100 bg-sky-500': !isJoinRoom }]"

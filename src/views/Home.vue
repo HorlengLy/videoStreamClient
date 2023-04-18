@@ -3,27 +3,25 @@
     import {router,socket,peer} from "../main"
     import { innerTextAnimate } from '../data';
     import {store} from "../Store"
-    peer.on('open',id=>{
-        window.peerId = id;
-        console.log(id)
-    })
-    socket.on('connect',()=>{
-        console.log('connection');
-    })
-    socket.on('getRoom',(rooms)=>{
-        // console.log({rooms});
-        store().setRooms(rooms)
-    })
-    socket.on('response',({ms,room,success})=>{
-        store().setLoading(false)
-        if(success) {
-            socket.emit("getRooms",room);
-            return router.replace({path:'/call/'+room})
-        }
-        alert(ms)
-    })
     export default{
         setup:()=>{
+            peer.on('open',id=>{
+                window.peerId = id;
+            })
+            socket.on('connect',()=>{
+                console.log('connected');
+            })
+            socket.on('getRoom',(rooms)=>{
+                store().setRooms(rooms)
+            })
+            socket.on('response',({ms,room,success})=>{
+                store().setLoading(false)
+                if(success) {
+                    socket.emit("getRooms",room);
+                    return router.replace({path:'/call/'+room})
+                }
+                alert(ms)
+            })
             setInterval(()=>{
                 innerTextAnimate();
             },16000)
@@ -39,7 +37,10 @@
                     store().setLoading(false)
                     return alert('all field are required')
                 }
-                if(!window.peerId) return alert("Error Internet connection")
+                if(!window.peerId) {
+                store().setLoading(false)
+                return alert("Error Internet connection")
+            }
                 socket.emit("joinRoom",{username,room,peerId:window.peerId,isJoin})
             },
             handleTheme:(e)=>{
@@ -119,7 +120,7 @@
         </div>
         <div class="relative overflow-hidden w-fit mx-auto mt-5">
             <span id="text-animate" class="md:text-3xl sm:text-xl text-lg font-lora text-gray-600 dark:text-gray-300 
-            before:content-[''] before:absolute transition-all duration-1000 before:text-white before:bg-white dark:before:bg-slate-700 before:w-full 
+            before:content-[''] before:absolute transition-all duration-1000 dark:transition-all dark:duration-1000 before:text-white before:bg-white dark:before:bg-slate-700 before:w-full 
             before:h-full before:top-0 before:left-0 before:border-l-2 before:border-gray-700 dark:before:border-gray-300 before:animate-text-animation"></span>
         </div>
         <div class="flex md:flex-row flex-col gap-10 md:gap-5 mt-[50px]">
