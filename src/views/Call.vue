@@ -229,11 +229,13 @@
         overflow: hidden;
         display: flex;
         justify-content: stretch;
-        width:100%;
-        height: 100%;
+        width:fit-content;
+        max-width: 400px;
+        min-width: 300px;
         overflow: hidden;
-        min-height: fit-content;
-        max-height: 300px;
+        height: fit-content;
+        max-height: 400px;
+        min-height: 250px;
         border-radius: 5px;
         background: #000;
     }  
@@ -271,6 +273,7 @@
             height: auto;
             margin: auto;
             border-radius: 5px;
+            margin-top: 10px;
         }
         video{
             border-radius: 5px;

@@ -8,7 +8,7 @@ export const reerConstrain = {
     video:{
         facingMode:'environment',
         width:{min:200,max:500},
-        height:{min:100,max:300}
+        height:{min:100,max:400}
     },
     audio:true,
 }
@@ -16,7 +16,7 @@ export const frontConstrain = {
     video:{
         facingMode:'user',
         width:{min:200,max:500},
-        height:{min:100,max:300}
+        height:{min:100,max:400}
     },
     audio:true,
 }
