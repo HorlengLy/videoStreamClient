@@ -36,21 +36,23 @@
       <input
         id="username"
         v-model="username"
-        type="email"
+        type="text"
+        required
         @keyup.enter="joinRoom(username, code)"
         class="peer border focus:ring-2 focus:border-transparent transition-all duration-200 ring-sky-300 text-gray-600 dark:text-gray-300 bg-transparent py-2 px-5 rounded-md outline-none w-full"
       />
-      <label for="username" class="peer-focus:top-[-10px] peer-invalid:top-[-10px] absolute left-[20px] top-[10px] transition-all duration-200 ease-out text-sm bg-white dark:bg-slate-700  text-gray-600 dark:text-gray-300">Username</label>
+      <label for="username" class="peer-focus:top-[-10px] peer-valid:top-[-10px] absolute left-[20px] top-[10px] transition-all duration-200 ease-out text-sm bg-white dark:bg-slate-700  text-gray-600 dark:text-gray-300">Username</label>
     </div>
     <div class="relative mx-auto mt-6">
       <input
         id="code"
         v-model="code"
-        type="email"
+        type="text"
+        required
         @keyup.enter="joinRoom(username, code,true)"
         class="peer border focus:ring-2 focus:border-transparent transition-all duration-200 ring-sky-300 text-gray-600 dark:text-gray-300 bg-transparent py-2 px-5 rounded-md outline-none w-full"
       />
-      <label for="code" class="peer-focus:top-[-10px] peer-invalid:top-[-10px] absolute left-[20px] top-[10px] transition-all duration-200 ease-out text-sm bg-white dark:bg-slate-700  text-gray-600 dark:text-gray-300">Room</label>
+      <label for="code" class="peer-focus:top-[-10px] peer-valid:top-[-10px] absolute left-[20px] top-[10px] transition-all duration-200 ease-out text-sm bg-white dark:bg-slate-700  text-gray-600 dark:text-gray-300">Room</label>
     </div>
     <div class="flex justify-end">
       <button
@@ -74,21 +76,23 @@
       <input
         id="username"
         v-model="username"
-        type="email"
+        type="text"
+        required
         @keyup.enter="joinRoom(username, room,false)"
         class="peer border focus:ring-2 focus:border-transparent transition-all duration-200 ring-sky-300 text-gray-600 dark:text-gray-300 bg-transparent py-2 px-5 rounded-md outline-none w-full"
       />
-      <label for="username" class="peer-focus:top-[-10px] peer-invalid:top-[-10px] absolute left-[20px] top-[10px] transition-all duration-200 ease-out text-sm bg-white dark:bg-slate-700  text-gray-600 dark:text-gray-300">Username</label>
+      <label for="username" class="peer-focus:top-[-10px] peer-valid:top-[-10px] absolute left-[20px] top-[10px] transition-all duration-200 ease-out text-sm bg-white dark:bg-slate-700  text-gray-600 dark:text-gray-300">Username</label>
     </div>
     <div class="relative mx-auto mt-6">
       <input
         id="room"
         v-model="room"
         type="text"
+        required
         disabled
         class="peer border bg-transparent py-2 px-5 rounded-md outline-none w-full  text-gray-600 dark:text-gray-300"
       />
-      <label for="room" class="top-[-10px] absolute left-[20px]  transition-all duration-200 ease-out text-sm bg-white dark:bg-slate-700  text-gray-600 dark:text-gray-300">Room</label>
+      <label for="room" class="top-[-10px]  absolute left-[20px] transition-all duration-200 ease-out text-sm bg-white dark:bg-slate-700  text-gray-600 dark:text-gray-300">Room</label>
       <span
         id="btnCopy"
         @click="copyText()"
@@ -115,16 +119,3 @@
     </div>
   </div>
 </template>
-
-
-<style>
-  /* label{
-        position: absolute;
-        transition: top .2s ease-out;
-        left: 20px;
-        top: 12px;
-    }
-    input:focus + label,input:valid + label,#room + label{
-        top: -10px;
-    } */
-</style>
