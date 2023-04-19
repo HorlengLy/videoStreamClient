@@ -197,7 +197,7 @@
 </script>
 <template>
     <div class="w-full mx-auto transition-all duration-1000 h-full bg-white dark:bg-slate-700">
-        <div id="call-container" class="lg:grid xl:grid-cols-3 lg:grid-cols-2  md:p-10 p-5 overflow-y-auto w-full xl:mt-0 mt-2 pb-[20px] h-[80%] bg-gray-200 dark:bg-gray-600">
+        <div id="call-container" class="lg:grid xl:grid-cols-3 lg:grid-cols-2 py-10  md:px-10 overflow-y-auto w-full h-[80%] bg-gray-200 dark:bg-gray-600">
             <div class="videoCover z-0">
                 <video  ref="ownVideoStream" muted></video> 
                 <span class="username self">You</span>
@@ -232,12 +232,12 @@
         width:100%;
         height: 100%;
         overflow: hidden;
-        height: auto;
-        border-radius: 10px;
+        height: fit-content;
+        border-radius: 5px;
         background: #000;
     }  
     .videoCover video{
-        border-radius: 10px;
+        border-radius: 5px;
         width: 100%;
         height: 100%;
     }
@@ -250,7 +250,7 @@
         width: fit-content;
         font-weight: bold;
         text-transform: capitalize;
-        top: 5%;
+        bottom: 10px;
         left: 0;
         right: 0;
         margin: auto;
@@ -269,13 +269,14 @@
             width: 98%;
             height: auto;
             margin: auto;
-            border-radius: 10px;
+            border-radius: 5px;
         }
         video{
-            border-radius: 10px;
+            border-radius: 5px;
         }
         .username{
-            top: 5%;
+            font-size: 15px;
+            bottom: 10px;   
             left: 0;
             right: 0;
             margin: auto;
