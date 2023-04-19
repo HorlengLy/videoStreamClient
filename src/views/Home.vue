@@ -12,6 +12,7 @@
                 console.log('connected');
             })
             socket.on('getRoom',(rooms)=>{
+                console.log(rooms);
                 store().setRooms(rooms)
             })
             socket.on('response',({ms,room,success})=>{
@@ -44,7 +45,6 @@
                 socket.emit("joinRoom",{username,room,peerId:window.peerId,isJoin})
             },
             handleTheme:(e)=>{
-                console.log(e.target.checked);
                 if(e.target.checked){
                     localStorage.setItem('color-theme','dark')
                     document.documentElement.classList.add('dark');

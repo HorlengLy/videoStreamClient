@@ -59,44 +59,52 @@
     async function switchCamera(){
         closeCamera()
         if(reerCamera){
-            await navigator.mediaDevices.getUserMedia(reerConstrain)
-            .then(async(remoteStream)=>{
-                localStream.value = remoteStream
-                ownVideoStream.value.srcObject = remoteStream;
-                ownVideoStream.value.addEventListener('loadedmetadata',()=>{
-                    ownVideoStream.value.play();
-                })
-                const members = store().rooms?.members
-                members?.forEach(async(member)=>{
-                    peer.connect(member.peerId)
-                    if(member.peerId == store().peerId) return
-                    const call = peer.call(member.peerId,remoteStream)
-                    call.on('stream',stream=>{
-                        addStream(member.username,member.peerId,stream)
+            try{
+                await navigator.mediaDevices.getUserMedia(reerConstrain)
+                .then(async(remoteStream)=>{
+                    localStream.value = remoteStream
+                    ownVideoStream.value.srcObject = remoteStream;
+                    ownVideoStream.value.addEventListener('loadedmetadata',()=>{
+                        ownVideoStream.value.play();
                     })
+                    const members = store().rooms?.members
+                    members?.forEach(async(member)=>{
+                        peer.connect(member.peerId)
+                        if(member.peerId == store().peerId) return
+                        const call = peer.call(member.peerId,remoteStream)
+                        call.on('stream',stream=>{
+                            addStream(member.username,member.peerId,stream)
+                        })
+                    })
+                    reerCamera.value = !reerCamera.value
                 })
-                reerCamera.value = !reerCamera.value
-            })
+            }catch(err){
+                console.log(err)
+            }
         }
         else{
-            await navigator.mediaDevices.getUserMedia(frontConstrain)
-            .then((remoteStream)=>{
-                localStream.value = remoteStream
-                ownVideoStream.value.srcObject = remoteStream;
-                ownVideoStream.value.addEventListener('loadedmetadata',()=>{
-                    ownVideoStream.value.play();
-                })
-                const members = store().rooms?.members
-                members?.forEach((member)=>{
-                    peer.connect(member.peerId)
-                    if(member.peerId == store().peerId) return
-                    const call = peer.call(member.peerId,remoteStream)
-                    call.on('stream',stream=>{
-                        addStream(member.username,member.peerId,stream)
+            try{
+                await navigator.mediaDevices.getUserMedia(frontConstrain)
+                .then((remoteStream)=>{
+                    localStream.value = remoteStream
+                    ownVideoStream.value.srcObject = remoteStream;
+                    ownVideoStream.value.addEventListener('loadedmetadata',()=>{
+                        ownVideoStream.value.play();
                     })
+                    const members = store().rooms?.members
+                    members?.forEach((member)=>{
+                        peer.connect(member.peerId)
+                        if(member.peerId == store().peerId) return
+                        const call = peer.call(member.peerId,remoteStream)
+                        call.on('stream',stream=>{
+                            addStream(member.username,member.peerId,stream)
+                        })
+                    })
+                    reerCamera.value = !reerCamera.value
                 })
-                reerCamera.value = !reerCamera.value
-            })
+            }catch(err){
+                console.log(err)
+            }
         }
         
         screenShare.value = false
@@ -185,7 +193,7 @@
 </script>
 <template>
     <div class="xl:w-[80%] md:w-[90%] w-full mx-auto transition-all duration-1000 lg:py-[30px] py-[20px]  h-full overflow-y-auto bg-white dark:bg-slate-700">
-        <div class="sm:pt-0 pt-10 z-10 flex items-center justify-between w-full py-3 px-[20px]">
+        <div class="sm:pt-0 pt-5 z-10 flex items-center justify-between w-full py-3 px-[20px]">
             <div>
                 <span @click="switchCamera()" class="cursor-pointer p-4 sm:hidden block">
                     <button class="py-2 px-4 text-gray-500 transition-all duration-200 hover:text-gray-100 dark:hover:text-gray-100 hover:bg-[#17801c] dark:hover:bg-[#17801c] bg-[#b9d7d9] dark:text-gray-200 dark:bg-[#668284] rounded-md">switch camera</button>
@@ -199,7 +207,7 @@
             </div>
             <button @click="leave()" class=" cursor-pointer font-lora border border-red-600 dark:border-gray-400 dark:hover:bg-gray-800 px-[20px] rounded-md hover:bg-red-600 hover:text-white py-2 transition-all duration-1000 md:text-base text-gray-600 dark:text-gray-200 text-sm">Leave</button>
         </div>
-        <div id="call-container" class="lg:grid lg:grid-cols-2 w-full mt-1 pb-[20px]">
+        <div id="call-container" class="lg:grid lg:grid-cols-2 lg:gap-x-1 gap-y-5 w-full mt-1 pb-[20px]">
             <div class="videoCover z-0">
                 <video  ref="ownVideoStream"  src=""></video> 
                 <span class="username self">You</span>
@@ -213,6 +221,7 @@
 <style>
     .videoCover{
         position: relative;
+        overflow: hidden;
         border-radius: 5px;
         padding: 10px;
         width: 100%;
@@ -235,7 +244,7 @@
         left: 0;
         right: 0;
         margin: auto;
-        bottom: 30px;
+        bottom: -20px;
     }
     .self{
         color: #21a42c;
