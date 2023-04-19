@@ -193,7 +193,7 @@
 </script>
 <template>
     <div class="xl:w-[80%] md:w-[90%] w-full mx-auto transition-all duration-1000 h-full bg-white dark:bg-slate-700">
-        <div id="call-container" class="xl:grid xl:grid-cols-2 gap-1 overflow-y-auto w-full mt-1 pb-[20px] h-[80%] bg-gray-200 dark:bg-gray-600">
+        <div id="call-container" class="xl:grid xl:grid-cols-2 gap-1 overflow-y-auto w-full lg:px-[30px] sm:px-[20px] px-[10px] xl:mt-0 mt-2 pb-[20px] h-[80%] bg-gray-200 dark:bg-gray-600">
             <div class="videoCover z-0">
                 <video  ref="ownVideoStream"  src=""></video> 
                 <span class="username self">You</span>
