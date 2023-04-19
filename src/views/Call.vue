@@ -192,9 +192,16 @@
     }
 </script>
 <template>
-    <div class="xl:w-[80%] md:w-[90%] w-full mx-auto transition-all duration-1000 lg:py-[30px] py-[20px]  h-full overflow-y-auto bg-white dark:bg-slate-700">
-        <div class="sm:pt-0 pt-5 z-10 flex items-center justify-between w-full py-3 px-[20px]">
-            <div>
+    <div class="xl:w-[80%] md:w-[90%] w-full mx-auto transition-all duration-1000 h-full bg-white dark:bg-slate-700">
+        <div id="call-container" class="xl:grid xl:grid-cols-2 gap-1 overflow-y-auto w-full mt-1 pb-[20px] h-[80%] bg-gray-200 dark:bg-gray-600">
+            <div class="videoCover z-0">
+                <video  ref="ownVideoStream"  src=""></video> 
+                <span class="username self">You</span>
+            </div>
+        </div>
+
+        <div class="absolute w-fit left-0 right-0 h-[20%] mx-auto py-[20px]">
+            <div class="inline-block">
                 <span @click="switchCamera()" class="cursor-pointer p-4 sm:hidden block">
                     <button class="py-2 px-4 text-gray-500 transition-all duration-200 hover:text-gray-100 dark:hover:text-gray-100 hover:bg-[#17801c] dark:hover:bg-[#17801c] bg-[#b9d7d9] dark:text-gray-200 dark:bg-[#668284] rounded-md">switch camera</button>
                 </span>
@@ -205,13 +212,7 @@
                     <button class="py-2 px-4 text-gray-500 transition-all duration-200 hover:text-gray-100 dark:hover:text-gray-100 hover:bg-[#17801c] dark:hover:bg-[#17801c] bg-[#b9d7d9] dark:text-gray-200 dark:bg-[#668284] rounded-md">open camera</button>
                 </span>
             </div>
-            <button @click="leave()" class=" cursor-pointer font-lora border border-red-600 dark:border-gray-400 dark:hover:bg-gray-800 px-[20px] rounded-md hover:bg-red-600 hover:text-white py-2 transition-all duration-1000 md:text-base text-gray-600 dark:text-gray-200 text-sm">Leave</button>
-        </div>
-        <div id="call-container" class="lg:grid lg:grid-cols-2 lg:gap-x-1 gap-y-5 w-full mt-1 pb-[20px]">
-            <div class="videoCover z-0">
-                <video  ref="ownVideoStream"  src=""></video> 
-                <span class="username self">You</span>
-            </div>
+            <button @click="leave()" class=" cursor-pointer font-lora px-[20px] rounded-md bg-red-700 dark:hover:bg-red-500 hover:bg-red-500 dark:bg-red-700 dark:text-white text-white py-2 transition-all duration-200 md:text-base text-sm">Leave</button>
         </div>
     </div>
 </template>
@@ -222,14 +223,15 @@
     .videoCover{
         position: relative;
         overflow: hidden;
-        border-radius: 5px;
-        padding: 10px;
+        display: flex;
+        justify-content: center;
         width: 100%;
+        height: 100%;
         overflow: hidden;
         height: auto;
         border-radius: 10px;
     }  
-    .videoCover video{
+    video{
         width: 100%;
         height: 100%;
         border-radius: 10px;
@@ -243,7 +245,7 @@
         width: fit-content;
         font-weight: bold;
         text-transform: capitalize;
-        top: 5%;
+        top: 10%;
         left: 5%;
     }
     .self{
@@ -262,8 +264,11 @@
             margin: auto;
             border-radius: 10px;
         }
-        .videoCover video{
+        video{
             border-radius: 10px;
+        }
+        .username{
+            top: 7%;
         }
     }
 </style>

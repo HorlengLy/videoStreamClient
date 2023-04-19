@@ -3,6 +3,8 @@
     import {router,socket,peer} from "../main"
     import { innerTextAnimate } from '../data';
     import {store} from "../Store"
+    import { ref } from 'vue';
+    const textAnimation = ref(null)
     export default{
         setup:()=>{
             peer.on('open',id=>{
@@ -24,10 +26,10 @@
                 alert(ms)
             })
             setInterval(()=>{
-                innerTextAnimate();
+                innerTextAnimate(textAnimation.value);
             },16000)
             Notification.requestPermission()
-            return {}
+            return {textAnimation}
         },
         components:{Form},
         methods:{
@@ -69,13 +71,13 @@
             if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                 document.documentElement.classList.add('dark');
                 document.querySelector("#checkbox").checked = true
-                document.querySelector("#text-animate").classList.add("text-animate-dark")
+                textAnimation.value.classList.add("text-animate-dark")
             } else {
                 document.documentElement.classList.remove('dark')
                 document.querySelector("#checkbox").checked = false
-                document.querySelector("#text-animate").classList.remove("text-animate-dark")
+                textAnimation.value.classList.remove("text-animate-dark")
             }
-            innerTextAnimate()
+            innerTextAnimate(textAnimation.value)
         }
     }
 </script>
@@ -111,7 +113,7 @@
                 </div>
             </div>
           <div class="flex items-center gap-2">
-            <div class="switch-btn relative shadow-md shadow-gray-400 dark:shadow-gray-300 rounded-[20px] w-[100px] h-[35px]">
+            <div class=" switch-btn relative shadow-md shadow-gray-400 dark:shadow-gray-300 rounded-[20px] w-[100px] h-[35px]">
                 <input @change="handleTheme" type="checkbox" id="checkbox" class="opacity-0 z-0 absolute">
                 <label for="checkbox"></label>
             </div>
@@ -119,7 +121,7 @@
           </div>
         </div>
         <div class="relative overflow-hidden w-fit mx-auto mt-5">
-            <span id="text-animate" class="md:text-3xl sm:text-xl text-lg font-lora text-gray-600 dark:text-gray-300 
+            <span ref="textAnimation" class="md:text-3xl sm:text-xl text-lg font-lora text-gray-600 dark:text-gray-300 
             before:content-[''] before:absolute transition-all duration-1000 dark:transition-all dark:duration-1000 before:text-white before:bg-white dark:before:bg-slate-700 before:w-full 
             before:h-full before:top-0 before:left-0 before:border-l-2 before:border-gray-700 dark:before:border-gray-300 before:animate-text-animation"></span>
         </div>
@@ -153,8 +155,8 @@
         background: rgb(195, 195, 195);
         width: 50px;
         height: 25px;
-        left: -10px;
-        top: 15px;
+        left: 10px;
+        top: 5px;
         text-align: center;
         font-family: 'Lora';
         border-radius: 20px;
@@ -163,7 +165,7 @@
     input[type="checkbox"]:checked + label::before{
         content: 'ON';
         position: absolute;
-        left: 20px;
+        left: 40px;
         background: rgb(12, 144, 20);
     }
 </style>

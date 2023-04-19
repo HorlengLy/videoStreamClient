@@ -7,16 +7,16 @@ export const generatorRoom = ()=>{
 export const reerConstrain = {
     video:{
         facingMode:'environment',
-        height:{min:100,max:200},
-        height:{min:100,max:200}
+        width:{min:200,max:300},
+        height:{min:200,max:300}
     },
     audio:true,
 }
 export const frontConstrain = {
     video:{
         facingMode:'user',
-        height:{min:100,max:200},
-        height:{min:100,max:200}
+        width:{min:100,max:300},
+        height:{min:100,max:300}
     },
     audio:true,
 }
@@ -30,8 +30,7 @@ export const copyText = ()=>{
     document.querySelector("#btnCopy").textContent = "copied";
 }
 
-export function innerTextAnimate(){
-    const text = document.querySelector("#text-animate")
+export function innerTextAnimate(text){
     if (!text) return;
     setTimeout(()=>{
         text.textContent = "Enjoy Video Call With Your GirlFriend"
