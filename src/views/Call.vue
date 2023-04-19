@@ -237,24 +237,23 @@
     .username{
         position: absolute;
         z-index: 100;
-        color: #99b333;
+        color: #91b503;
         font-size: 25px;
         font-family: Lora;
         width: fit-content;
-        left: 0;
-        right: 0;
-        margin: auto;
-        bottom: -20px;
+        font-weight: bold;
+        text-transform: capitalize;
+        top: 5%;
+        left: 5%;
     }
     .self{
         color: #21a42c;
-        bottom: 20px;
     }
     .owner{
         color: #aeea00;
     }
     .owner::after{
-        content: '  =>Owner';
+        content: '(Owner)';
     }
     @media screen and (max-width:1000px){
         .videoCover{
