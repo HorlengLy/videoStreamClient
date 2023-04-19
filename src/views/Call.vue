@@ -14,10 +14,14 @@
     socket.on('userJoinedRoom',({username,peerId})=>{
         peer.connect(peerId)
         pushNoti(`${username} join room`)
+        if(window.screen.width<500)
+            alert(`${username} join room`)
     })
     socket.on("user-left",peerId=>{
         document.getElementById(peerId)?.remove()
         pushNoti(`${getUser(peerId)?.username} was left the room`)
+        if(window.screen.width<500)
+            alert(`${username} join room`)
     })
     peer.on('call',async(call)=>{
         call.answer(localStream.value)
@@ -112,7 +116,7 @@
 
    async function shareScreen(){
        try{
-            await navigator.mediaDevices.getDisplayMedia({video:true,audio:true,})
+            await navigator.mediaDevices.getDisplayMedia({video:true,audio:true})
             .then(remoteStream=>{
                 closeCamera()
                 localStream.value = remoteStream
@@ -192,10 +196,10 @@
     }
 </script>
 <template>
-    <div class="xl:w-[80%] md:w-[90%] w-full mx-auto transition-all duration-1000 h-full bg-white dark:bg-slate-700">
-        <div id="call-container" class="xl:grid xl:grid-cols-2 gap-1 overflow-y-auto w-full lg:px-[30px] sm:px-[20px] px-[10px] xl:mt-0 mt-2 pb-[20px] h-[80%] bg-gray-200 dark:bg-gray-600">
+    <div class="w-full mx-auto transition-all duration-1000 h-full bg-white dark:bg-slate-700">
+        <div id="call-container" class="lg:grid xl:grid-cols-3 lg:grid-cols-2  md:p-10 p-5 overflow-y-auto w-full xl:mt-0 mt-2 pb-[20px] h-[80%] bg-gray-200 dark:bg-gray-600">
             <div class="videoCover z-0">
-                <video  ref="ownVideoStream"  src=""></video> 
+                <video  ref="ownVideoStream" muted></video> 
                 <span class="username self">You</span>
             </div>
         </div>
@@ -224,17 +228,18 @@
         position: relative;
         overflow: hidden;
         display: flex;
-        justify-content: center;
-        width: 100%;
+        justify-content: stretch;
+        width:100%;
         height: 100%;
         overflow: hidden;
         height: auto;
         border-radius: 10px;
+        background: #000;
     }  
-    video{
+    .videoCover video{
+        border-radius: 10px;
         width: 100%;
         height: 100%;
-        border-radius: 10px;
     }
     .username{
         position: absolute;
@@ -245,8 +250,10 @@
         width: fit-content;
         font-weight: bold;
         text-transform: capitalize;
-        top: 10%;
-        left: 5%;
+        top: 5%;
+        left: 0;
+        right: 0;
+        margin: auto;
     }
     .self{
         color: #21a42c;
@@ -268,7 +275,10 @@
             border-radius: 10px;
         }
         .username{
-            top: 7%;
+            top: 5%;
+            left: 0;
+            right: 0;
+            margin: auto;
         }
     }
 </style>

@@ -7,16 +7,16 @@ export const generatorRoom = ()=>{
 export const reerConstrain = {
     video:{
         facingMode:'environment',
-        width:300,
-        height:300
+        width:{min:200,max:400},
+        height:{min:100,max:300}
     },
     audio:true,
 }
 export const frontConstrain = {
     video:{
         facingMode:'user',
-        width:300,
-        height:300
+        width:{min:200,max:400},
+        height:{min:100,max:300}
     },
     audio:true,
 }
