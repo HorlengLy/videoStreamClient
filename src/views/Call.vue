@@ -229,13 +229,9 @@
         overflow: hidden;
         display: flex;
         justify-content: stretch;
-        width:fit-content;
-        max-width: 400px;
-        min-width: 300px;
+        width: 100%;
         overflow: hidden;
-        height: fit-content;
-        max-height: 400px;
-        min-height: 250px;
+        height: 400px;
         border-radius: 5px;
         background: #000;
     }  
