@@ -10,7 +10,12 @@
           const isJoinRoom = ref(false)
           return {code,room,username,isJoinRoom,copyText,store}
         },
-        props:['joinRoom'],
+        methods:{
+          scrollDown:(coverPage)=>{
+            coverPage.scrollTo(0,120)
+          }
+        },
+        props:['joinRoom','coverPage'],
 
     } 
 </script>
@@ -34,9 +39,11 @@
   <div class="mt-10" v-if="isJoinRoom">
     <div class="relative mx-auto">
       <input
+        @focus="scrollDown(coverPage)"
         id="username"
         v-model="username"
         type="text"
+        autocomplete="off"
         required
         @keyup.enter="joinRoom(username, code)"
         class="peer border focus:ring-2 focus:border-transparent transition-all duration-200 ring-sky-300 text-gray-600 dark:text-gray-300 bg-transparent py-2 px-5 rounded-md outline-none w-full"
@@ -47,8 +54,10 @@
       <input
         id="code"
         v-model="code"
+        @focus="scrollDown(coverPage)"
         type="text"
         required
+        autocomplete="off"
         @keyup.enter="joinRoom(username, code,true)"
         class="peer border focus:ring-2 focus:border-transparent transition-all duration-200 ring-sky-300 text-gray-600 dark:text-gray-300 bg-transparent py-2 px-5 rounded-md outline-none w-full"
       />
@@ -77,7 +86,9 @@
         id="username"
         v-model="username"
         type="text"
+        @focus="scrollDown(coverPage)"
         required
+        autocomplete="off"
         @keyup.enter="joinRoom(username, room,false)"
         class="peer border focus:ring-2 focus:border-transparent transition-all duration-200 ring-sky-300 text-gray-600 dark:text-gray-300 bg-transparent py-2 px-5 rounded-md outline-none w-full"
       />
@@ -90,6 +101,7 @@
         type="text"
         required
         disabled
+        autocomplete="off"
         class="peer border bg-transparent py-2 px-5 rounded-md outline-none w-full  text-gray-600 dark:text-gray-300"
       />
       <label for="room" class="top-[-10px]  absolute left-[20px] transition-all duration-200 ease-out text-sm bg-white dark:bg-slate-700  text-gray-600 dark:text-gray-300">Room</label>

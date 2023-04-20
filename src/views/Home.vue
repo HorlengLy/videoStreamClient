@@ -7,6 +7,8 @@
     const textAnimation = ref(null)
     export default{
         setup:()=>{
+            const coverPage = ref(null)
+            const dev = ref(null)
             peer.on('open',id=>{
                 window.peerId = id;
             })
@@ -29,7 +31,7 @@
                 innerTextAnimate(textAnimation.value);
             },16000)
             Notification.requestPermission()
-            return {textAnimation}
+            return {textAnimation,coverPage,dev}
         },
         components:{Form},
         methods:{
@@ -56,12 +58,13 @@
                     document.documentElement.classList.remove('dark');
                 }
             },
-            show(){
-                document.querySelector("#dev").classList.toggle('opacity-0')
-                document.querySelector("#dev").classList.toggle('z-[-1000]')
-                document.querySelector("#dev").classList.toggle('z-[1000]')
-                document.querySelector("#dev").classList.toggle('top-0')
-                document.querySelector("#dev").classList.toggle('top-[40px]')
+            show(dev){
+                dev.classList.remove('opacity-0','top-0')
+                dev.classList.add('z-[1000]','opacity-100','top-[40px]')
+            },
+            hide(dev){
+                dev.classList.remove('z-[-1000]','opacity-100','top-[40px]')
+                dev.classList.add('opacity-0','top-0','z-[-1000]')
             },
             developer(url){
                 window.open(url);
@@ -84,13 +87,16 @@
 
 
 <template>
-    <div class="xl:w-[80%] md:w-[90%] w-full mx-auto bg-white dark:bg-slate-700 transition-all duration-1000 lg:px-[100px] md:px-[50px] px-[10px] md:py-[40px] py-[10px] h-full overflow-y-auto">
+    <div ref="coverPage" class="xl:w-[80%] md:w-[90%] w-full mx-auto bg-white dark:bg-slate-700 transition-all duration-1000 lg:px-[100px] md:px-[50px] px-[10px] md:py-[40px] py-[10px] h-full overflow-y-auto">
         <div class="z-10 flex items-center justify-between sm:justify-end md:gap-5 gap-3 w-full py-3 px-[20px]">
-            <div class="relative group"  @click="show">
-                <div class="cursor-pointer font-lora text-base font-semibold hover:text-green-600 dark:text-gray-300 capitalize tracking-widest border-2 border-transparent hover:border-b-green-600 transition-all duration-1000 text-gray-600 ">
+            <div class="relative group">
+                <div  @mouseover="show(dev)" @mouseout="hide(dev)" class="sm:block hidden  cursor-pointer font-lora text-base font-semibold hover:text-green-600 dark:text-gray-300 capitalize tracking-widest border-2 border-transparent hover:border-b-green-600 transition-all duration-1000 text-gray-600 ">
                     developer
                 </div>
-                <div id="dev" class="z-[-1000] absolute shadow-md shadow-gray-300 dark:shadow-gray-500 bg-white dark:bg-slate-700 py-[30px] rounded w-[250px] opacity-0 sm:left-[-100%] left-[-50%] top-0 transition-all duration-300 ease-out">
+                <div @click="show(dev)" class="sm:hidden block cursor-pointer font-lora text-base font-semibold hover:text-green-600 dark:text-gray-300 capitalize tracking-widest border-2 border-transparent hover:border-b-green-600 transition-all duration-1000 text-gray-600 ">
+                    developer
+                </div>
+                <div ref="dev" class="z-[-1000] hover:opacity-100 hover:top-[40px] absolute shadow-md shadow-gray-300 dark:shadow-gray-500 bg-white dark:bg-slate-700 py-[30px] rounded w-[250px] opacity-0 sm:left-[-100%] left-[-50%] top-0 transition-all duration-300 ease-out">
                     <div class="flex justify-center gap-8 ">
                         <span @click="developer('https://www.facebook.com/Horlenggg?mibextid=ZbWKwL')" class="cursor-pointer relative">
                             <p class=" dark:text-gray-300 text-gray-600 text-xs font-lora absolute bottom-[-20px] left-[-10px]">Facebook</p>
@@ -132,7 +138,7 @@
             </div>
             <div class="flex-1 sm:pb-[20px] pb-[200px]">
                 <div class="sm:w-[70%] w-[90%] mx-auto">
-                    <Form :joinRoom="joinRoom"/>
+                    <Form :joinRoom="joinRoom" :coverPage="coverPage"/>
                 </div>
             </div>
         </div>
