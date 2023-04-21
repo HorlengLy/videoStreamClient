@@ -78,6 +78,7 @@
     // funtion
 
     async function switchCamera(){
+        reerCamera.value = !reerCamera.value
         closeCamera()
         if(reerCamera.value){
             try{
@@ -97,7 +98,6 @@
                             addStream(member.username,member.peerId,stream)
                         })
                     })
-                    reerCamera.value = !reerCamera.value
                 })
             }catch(err){
                 console.log(err)
@@ -121,7 +121,6 @@
                             addStream(member.username,member.peerId,stream)
                         })
                     })
-                    reerCamera.value = !reerCamera.value
                 })
             }catch(err){
                 console.log(err)
@@ -214,20 +213,22 @@
 </script>
 <template>
     <div class="w-full mx-auto transition-all duration-1000 h-full bg-white dark:bg-slate-700">
-        <div ref="dateTime" class="absolute left-5 md:left-16 text-lg md:top-4 sm:top-10 top-16 text-indigo-500">
-            
+        <div class="fixed w-full md:px-[100px] sm:px-[50px] z-[1000] px-[25px] py-3 flex justify-between items-center bg-white dark:bg-slate-700">
+            <span ref="dateTime" class="text-lg font-bold text-green-600 tracking-wider">
+                
+            </span>
+            <span ref="time" class="text-lg font-bold text-blue-600 tracking-wider">
+                
+            </span>
         </div>
-        <div ref="time" class="absolute md:right-16 right-5 text-lg md:top-4 sm:top-10 top-16 text-orange-500">
-            
-        </div>
-        <div id="call-container" class="lg:grid xl:grid-cols-3 lg:grid-cols-2 sm:pt-20 pt-24 pb-10  md:px-10 overflow-y-auto w-full h-[80%] bg-gray-200 dark:bg-gray-600">
+        <div id="call-container" class="lg:grid xl:grid-cols-3 lg:grid-cols-2 sm:pt-20 pt-24 pb-10  md:px-10 overflow-y-auto w-full h-[85%] bg-gray-200 dark:bg-gray-600">
             <div class="videoCover z-0">
                 <video  ref="ownVideoStream" muted></video> 
                 <span class="username self">You</span>
             </div>
         </div>
 
-        <div class="absolute w-fit left-0 right-0 h-[20%] mx-auto py-[20px]">
+        <div class="absolute w-fit left-0 right-0 h-[15%] mx-auto py-[20px]">
             <div class="inline-block">
                 <span @click="switchCamera()" class="cursor-pointer sm:hidden block">
                     <button class="py-2 px-4 text-gray-500 transition-all duration-200 hover:text-gray-100 dark:hover:text-gray-100 hover:bg-[#17801c] dark:hover:bg-[#17801c] bg-[#b9d7d9] dark:text-gray-200 dark:bg-[#668284] rounded-md">switch camera</button>
