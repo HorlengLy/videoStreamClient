@@ -7,6 +7,8 @@
     const screenShare = ref(false)
     const localStream = ref(null)
     const ownVideoStream = ref(null)
+    const second = ref(null),minute = ref(null)
+    ,time = ref(null),dateTime = ref(null)
     // event
     peer.on('connection',(conn)=>{
         window.friendId = conn.peer;
@@ -48,15 +50,34 @@
                     })
                 })
             })
-    })
+        })
+        // time count up
+        let s =0,m=0
+        setInterval(()=>{
+            s++;
+            if(s.toString().length==2)
+                second.value.textContent = s + 's'
+            else 
+                second.value.textContent = '0' + s + 's'
+            if(s==59){
+                s = 0;m++
+                if(m.toString().length==2)
+                    minute.value.textContent = m + 'm'
+                else 
+                    minute.value.textContent = '0' + m + 'm'
+
+            }
+            // time
+            const date = new Date()
+            time.value.textContent = date.toLocaleTimeString()
+            dateTime.value.textContent = date.toLocaleDateString()
+        },1000)
     function leave(){
         window.location.href = "https://videocaller.netlify.app/";
     }
     function getUser(peerId){
         return store().rooms?.members?.find(member=>member.peerId===peerId)
     }
-
-
 
     // funtion
 
@@ -197,7 +218,13 @@
 </script>
 <template>
     <div class="w-full mx-auto transition-all duration-1000 h-full bg-white dark:bg-slate-700">
-        <div id="call-container" class="lg:grid xl:grid-cols-3 lg:grid-cols-2 py-10  md:px-10 overflow-y-auto w-full h-[80%] bg-gray-200 dark:bg-gray-600">
+        <div ref="dateTime" class="absolute left-5 md:left-16 text-lg md:top-4 top-7 text-indigo-500">
+            
+        </div>
+        <div ref="time" class="absolute md:right-16 right-5 text-lg md:top-4 top-7 text-orange-500">
+            
+        </div>
+        <div id="call-container" class="lg:grid xl:grid-cols-3 lg:grid-cols-2 pt-16 pb-10  md:px-10 overflow-y-auto w-full h-[80%] bg-gray-200 dark:bg-gray-600">
             <div class="videoCover z-0">
                 <video  ref="ownVideoStream" muted></video> 
                 <span class="username self">You</span>
@@ -206,7 +233,7 @@
 
         <div class="absolute w-fit left-0 right-0 h-[20%] mx-auto py-[20px]">
             <div class="inline-block">
-                <span @click="switchCamera()" class="cursor-pointer p-4 sm:hidden block">
+                <span @click="switchCamera()" class="cursor-pointer sm:hidden block">
                     <button class="py-2 px-4 text-gray-500 transition-all duration-200 hover:text-gray-100 dark:hover:text-gray-100 hover:bg-[#17801c] dark:hover:bg-[#17801c] bg-[#b9d7d9] dark:text-gray-200 dark:bg-[#668284] rounded-md">switch camera</button>
                 </span>
                 <span  v-if="!screenShare" @click="shareScreen()" class="cursor-pointer p-4 sm:block hidden">
@@ -214,6 +241,15 @@
                 </span>
                 <span v-else @click="switchCamera()" class="cursor-pointer p-4 sm:block hidden">
                     <button class="py-2 px-4 text-gray-500 transition-all duration-200 hover:text-gray-100 dark:hover:text-gray-100 hover:bg-[#17801c] dark:hover:bg-[#17801c] bg-[#b9d7d9] dark:text-gray-200 dark:bg-[#668284] rounded-md">open camera</button>
+                </span>
+            </div>
+            <div class="w-[100px] inline-block mx-3 dark:bg-gray-500 bg-gray-200 py-2 text-center rounded-lg">
+                <span ref="minute" class="mr-[1px]">
+                    00m
+                </span>
+                :
+                <span ref="second" class="ml-[1px]">
+                    00s
                 </span>
             </div>
             <button @click="leave()" class=" cursor-pointer font-lora px-[20px] rounded-md bg-red-700 dark:hover:bg-red-500 hover:bg-red-500 dark:bg-red-700 dark:text-white text-white py-2 transition-all duration-200 md:text-base text-sm">Leave</button>

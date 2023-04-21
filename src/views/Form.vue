@@ -12,7 +12,7 @@
         },
         methods:{
           scrollDown:(coverPage)=>{
-            coverPage.scrollTo(0,150)
+            coverPage.scrollTo(0,window.screen.height/2)
           }
         },
         props:['joinRoom','coverPage'],
