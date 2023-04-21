@@ -66,12 +66,19 @@
                 else 
                     minute.value.textContent = '0' + m + 'm'
 
-            }
-            // time
+                }
             const date = new Date()
             time.value.textContent = date.toLocaleTimeString()
-            dateTime.value.textContent = date.toLocaleDateString()
         },1000)
+        setTimeout(()=>{
+            const date = new Date()
+            dateTime.value.textContent = date.toLocaleDateString()
+        })
+        setInterval(()=>{
+            // date
+            const date = new Date()
+            dateTime.value.textContent = date.toLocaleDateString()
+        },60000)
     function leave(){
         window.location.href = "https://videocaller.netlify.app/";
     }
@@ -218,13 +225,13 @@
 </script>
 <template>
     <div class="w-full mx-auto transition-all duration-1000 h-full bg-white dark:bg-slate-700">
-        <div ref="dateTime" class="absolute left-5 md:left-16 text-lg md:top-4 top-10 text-indigo-500">
+        <div ref="dateTime" class="absolute left-5 md:left-16 text-lg md:top-4 sm:top-10 top-14 text-indigo-500">
             
         </div>
-        <div ref="time" class="absolute md:right-16 right-5 text-lg md:top-4 top-10 text-orange-500">
+        <div ref="time" class="absolute md:right-16 right-5 text-lg md:top-4 sm:top-10 top-14 text-orange-500">
             
         </div>
-        <div id="call-container" class="lg:grid xl:grid-cols-3 lg:grid-cols-2 pt-20 pb-10  md:px-10 overflow-y-auto w-full h-[80%] bg-gray-200 dark:bg-gray-600">
+        <div id="call-container" class="lg:grid xl:grid-cols-3 lg:grid-cols-2 sm:pt-20 pt-24 pb-10  md:px-10 overflow-y-auto w-full h-[80%] bg-gray-200 dark:bg-gray-600">
             <div class="videoCover z-0">
                 <video  ref="ownVideoStream" muted></video> 
                 <span class="username self">You</span>
@@ -258,7 +265,6 @@
 </template>
 
 
-
 <style>
     .videoCover{
         position: relative;
@@ -272,6 +278,7 @@
         background: #000;
     }  
     .videoCover video{
+        transition: all .5s linear;
         border-radius: 5px;
         width: 100%;
         height: 100%;
@@ -308,6 +315,7 @@
             margin-top: 10px;
         }
         video{
+            transition: all .5s linear;
             border-radius: 5px;
         }
         .username{
