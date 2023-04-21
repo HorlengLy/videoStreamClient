@@ -59,26 +59,15 @@
                 second.value.textContent = s + 's'
             else 
                 second.value.textContent = '0' + s + 's'
-            if(s==59){
-                s = 0;m++
-                if(m.toString().length==2)
-                    minute.value.textContent = m + 'm'
-                else 
-                    minute.value.textContent = '0' + m + 'm'
-
-                }
+            if(s==59){ s = 0;m++ }
+            if(m.toString().length==2)
+                minute.value.textContent = m + 'm'
+            else 
+                minute.value.textContent = '0' + m + 'm'
             const date = new Date()
             time.value.textContent = date.toLocaleTimeString()
+            dateTime.value.textContent = date.toLocaleDateString()
         },1000)
-        setTimeout(()=>{
-            const date = new Date()
-            dateTime.value.textContent = date.toLocaleDateString()
-        })
-        setInterval(()=>{
-            // date
-            const date = new Date()
-            dateTime.value.textContent = date.toLocaleDateString()
-        },60000)
     function leave(){
         window.location.href = "https://videocaller.netlify.app/";
     }
@@ -90,7 +79,7 @@
 
     async function switchCamera(){
         closeCamera()
-        if(reerCamera){
+        if(reerCamera.value){
             try{
                 await navigator.mediaDevices.getUserMedia(reerConstrain)
                 .then(async(remoteStream)=>{
@@ -225,10 +214,10 @@
 </script>
 <template>
     <div class="w-full mx-auto transition-all duration-1000 h-full bg-white dark:bg-slate-700">
-        <div ref="dateTime" class="absolute left-5 md:left-16 text-lg md:top-4 sm:top-10 top-14 text-indigo-500">
+        <div ref="dateTime" class="absolute left-5 md:left-16 text-lg md:top-4 sm:top-10 top-16 text-indigo-500">
             
         </div>
-        <div ref="time" class="absolute md:right-16 right-5 text-lg md:top-4 sm:top-10 top-14 text-orange-500">
+        <div ref="time" class="absolute md:right-16 right-5 text-lg md:top-4 sm:top-10 top-16 text-orange-500">
             
         </div>
         <div id="call-container" class="lg:grid xl:grid-cols-3 lg:grid-cols-2 sm:pt-20 pt-24 pb-10  md:px-10 overflow-y-auto w-full h-[80%] bg-gray-200 dark:bg-gray-600">
@@ -252,11 +241,9 @@
             </div>
             <div class="w-[100px] inline-block mx-3 dark:bg-gray-500 bg-gray-200 py-2 text-center rounded-lg">
                 <span ref="minute" class="mr-[1px]">
-                    00m
                 </span>
                 :
                 <span ref="second" class="ml-[1px]">
-                    00s
                 </span>
             </div>
             <button @click="leave()" class=" cursor-pointer font-lora px-[20px] rounded-md bg-red-700 dark:hover:bg-red-500 hover:bg-red-500 dark:bg-red-700 dark:text-white text-white py-2 transition-all duration-200 md:text-base text-sm">Leave</button>
