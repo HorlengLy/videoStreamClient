@@ -218,13 +218,13 @@
 </script>
 <template>
     <div class="w-full mx-auto transition-all duration-1000 h-full bg-white dark:bg-slate-700">
-        <div ref="dateTime" class="absolute left-5 md:left-16 text-lg md:top-4 top-7 text-indigo-500">
+        <div ref="dateTime" class="absolute left-5 md:left-16 text-lg md:top-4 top-10 text-indigo-500">
             
         </div>
-        <div ref="time" class="absolute md:right-16 right-5 text-lg md:top-4 top-7 text-orange-500">
+        <div ref="time" class="absolute md:right-16 right-5 text-lg md:top-4 top-10 text-orange-500">
             
         </div>
-        <div id="call-container" class="lg:grid xl:grid-cols-3 lg:grid-cols-2 pt-16 pb-10  md:px-10 overflow-y-auto w-full h-[80%] bg-gray-200 dark:bg-gray-600">
+        <div id="call-container" class="lg:grid xl:grid-cols-3 lg:grid-cols-2 pt-20 pb-10  md:px-10 overflow-y-auto w-full h-[80%] bg-gray-200 dark:bg-gray-600">
             <div class="videoCover z-0">
                 <video  ref="ownVideoStream" muted></video> 
                 <span class="username self">You</span>
