@@ -137,16 +137,8 @@
             before:content-[''] before:absolute transition-all duration-1000 dark:transition-all dark:duration-1000 before:text-white before:bg-white dark:before:bg-slate-700 before:w-full 
             before:h-full before:top-0 before:left-0 before:border-l-2 before:border-gray-700 dark:before:border-gray-300 before:animate-text-animation"></span>
         </div>
-        <div class="flex md:flex-row flex-col gap-10 md:gap-5 mt-[50px]">
-            <div class="flex-1 flex items-center lg:justify-start sm:justify-center justify-start rounded relative">
-                <img src="../assets/Greeting.png" alt="" class="sm:w-auto  w-[250px]">
-                <span class="transition-all duration-1000 bg-sky-600 dark:bg-gray-300 dark:text-gray-500 py-1 sm:px-5 px-2 rounded-full absolute text-gray-100 sm:top-[10px] top-[5px] md:right-[-30px] right-[50px] font-lora">Hi Baby</span>
-            </div>
-            <div class="flex-1 sm:pb-[20px] pb-[200px]">
-                <div class="sm:w-[70%] w-[90%] mx-auto">
-                    <Form :joinRoom="joinRoom" :coverPage="coverPage"/>
-                </div>
-            </div>
+        <div class="lg:w-[40%] md:w-[50%] sm:w-[60%] w-[90%] mx-auto transition-all duration-300 mt-12">
+            <Form :joinRoom="joinRoom" :coverPage="coverPage"/>
         </div>
     </div>
 </template>

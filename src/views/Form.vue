@@ -36,32 +36,34 @@
       Join Room
     </button>
   </div>
-  <div class="mt-10" v-if="isJoinRoom">
+  <div class="mt-16" v-if="isJoinRoom">
     <div class="relative mx-auto">
       <input
         @focus="scrollDown(coverPage)"
         id="username"
         v-model="username"
         type="text"
+        placeholder="What's your name?"
         autocomplete="off"
         required
         @keyup.enter="joinRoom(username, code)"
-        class="peer border focus:ring-2 focus:border-transparent transition-all duration-200 ring-sky-300 text-gray-600 dark:text-gray-300 bg-transparent py-2 px-5 rounded-md outline-none w-full"
+        class="peer text-[16px] border focus:ring-2 focus:border-transparent transition-all duration-300 ring-sky-300 text-gray-600 dark:text-gray-300 bg-transparent py-[10px] px-5 rounded-md outline-none w-full placeholder:text-sm placeholder:text-transparent focus:placeholder:text-gray-600 dark:focus:placeholder:text-gray-400 "
       />
-      <label for="username" class="peer-focus:top-[-10px] peer-valid:top-[-10px] absolute left-[20px] top-[10px] transition-all duration-200 ease-out text-sm bg-white dark:bg-slate-700  text-gray-600 dark:text-gray-300">Username</label>
+      <label for="username" class="peer-focus:top-[-30px] peer-valid:top-[-30px] peer-focus:left-0 peer-valid:left-0 absolute left-[20px] top-[10px] transition-all duration-200 ease-out text-[16px] text-gray-700 dark:text-gray-300">Username</label>
     </div>
-    <div class="relative mx-auto mt-6">
+    <div class="relative mx-auto mt-10">
       <input
         id="code"
         v-model="code"
         @focus="scrollDown(coverPage)"
         type="text"
         required
+        placeholder="Enter the same room to join video call?"
         autocomplete="off"
         @keyup.enter="joinRoom(username, code,true)"
-        class="peer border focus:ring-2 focus:border-transparent transition-all duration-200 ring-sky-300 text-gray-600 dark:text-gray-300 bg-transparent py-2 px-5 rounded-md outline-none w-full"
+        class="peer text-[16px] border focus:ring-2 focus:border-transparent transition-all duration-200 ring-sky-300 text-gray-600 dark:text-gray-300 bg-transparent py-[10px] px-5 rounded-md outline-none w-full placeholder:text-sm placeholder:text-transparent focus:placeholder:text-gray-600 dark:focus:placeholder:text-gray-400 "
       />
-      <label for="code" class="peer-focus:top-[-10px] peer-valid:top-[-10px] absolute left-[20px] top-[10px] transition-all duration-200 ease-out text-sm bg-white dark:bg-slate-700  text-gray-600 dark:text-gray-300">Room</label>
+      <label for="code" class="peer-focus:top-[-30px] peer-valid:top-[-30px] peer-focus:left-0 peer-valid:left-0 absolute left-[20px] top-[10px] transition-all duration-200 ease-out text-[16px] text-gray-700 dark:text-gray-300 ">Room</label>
     </div>
     <div class="flex justify-end">
       <button
@@ -80,7 +82,7 @@
       </button>
     </div>
   </div>
-  <div class="mt-10" v-else>
+  <div class="mt-16" v-else>
     <div class="relative mx-auto">
       <input
         id="username"
@@ -88,13 +90,14 @@
         type="text"
         @focus="scrollDown(coverPage)"
         required
+        placeholder="What's your name?"
         autocomplete="off"
         @keyup.enter="joinRoom(username, room,false)"
-        class="peer border focus:ring-2 focus:border-transparent transition-all duration-200 ring-sky-300 text-gray-600 dark:text-gray-300 bg-transparent py-2 px-5 rounded-md outline-none w-full"
+        class="peer text-[16px] border focus:ring-2 focus:border-transparent placeholder:text-sm placeholder:text-transparent focus:placeholder:text-gray-600 dark:focus:placeholder:text-gray-400 transition-all duration-200 ring-sky-300 text-gray-600 dark:text-gray-300 bg-transparent py-[10px] px-5 rounded-md outline-none w-full"
       />
-      <label for="username" class="peer-focus:top-[-10px] peer-valid:top-[-10px] absolute left-[20px] top-[10px] transition-all duration-200 ease-out text-sm bg-white dark:bg-slate-700  text-gray-600 dark:text-gray-300">Username</label>
+      <label for="username" class="peer-focus:top-[-30px] peer-valid:top-[-30px] peer-focus:left-0 peer-valid:left-0 absolute left-[20px] top-[10px] transition-all duration-200 ease-out text-[16px] text-gray-700 dark:text-gray-300">Username</label>
     </div>
-    <div class="relative mx-auto mt-6">
+    <div class="relative mx-auto mt-10">
       <input
         id="room"
         v-model="room"
@@ -102,9 +105,9 @@
         required
         disabled
         autocomplete="off"
-        class="peer border bg-transparent py-2 px-5 rounded-md outline-none w-full  text-gray-600 dark:text-gray-300"
+        class="peer border bg-transparent py-[10px] px-5 rounded-md outline-none w-full  text-gray-600 dark:text-gray-300"
       />
-      <label for="room" class="top-[-10px]  absolute left-[20px] transition-all duration-200 ease-out text-sm bg-white dark:bg-slate-700  text-gray-600 dark:text-gray-300">Room</label>
+      <label for="room" class="top-[-30px] text-[16px] absolute left-0 transition-all duration-200 ease-out text-sm  text-gray-600 dark:text-gray-300">Room</label>
       <span
         id="btnCopy"
         @click="copyText()"
